@@ -1,0 +1,22 @@
+.tl-welcome {
+    height: 100%;
+    width: 100%;
+    background-image: url("img/links-bg.jpg");
+    color: white;
+}
+
+.tl-header {
+    font-size: 36px;
+    height: 10%;
+    padding: 10px;
+}
+
+.tl-content {
+    height: 80%;
+}
+
+.tl-footer {
+    height: 10%;
+    text-align: end;
+    padding: 10px;
+}
