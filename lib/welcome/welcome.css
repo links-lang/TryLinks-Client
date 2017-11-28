@@ -9,6 +9,7 @@
     font-size: 36px;
     height: 10%;
     padding: 10px;
+    font-family: monospace;
 }
 
 .tl-content {
@@ -16,7 +17,29 @@
 }
 
 .tl-footer {
-    height: 10%;
     text-align: end;
     padding: 10px;
+}
+
+.tl-logo {
+    height: 200px;
+    padding: 16px;
+}
+
+.tl-description {
+    display: flex;
+    align-items: center;
+}
+
+.ti-actions {
+    min-height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ti-actions material-button {
+    background-color: dodgerblue;
+    margin: 0 200px;
 }

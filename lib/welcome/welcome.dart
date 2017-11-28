@@ -1,10 +1,11 @@
 import 'package:angular/angular.dart';
+import 'package:angular_components/angular_components.dart';
 
 @Component(
   selector: 'welcome',
   templateUrl: 'welcome.html',
   styleUrls: const ['welcome.css'],
-  directives: const []
+  directives: const [materialDirectives]
 )
 class WelcomePageComponent {
 
