@@ -9,4 +9,8 @@ import 'package:angular_components/angular_components.dart';
 )
 class WelcomePageComponent {
 
+  void routeToStartPage() {
+    print("should route to Start page");
+  }
+
 }
