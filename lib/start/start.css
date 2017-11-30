@@ -1,0 +1,36 @@
+:host {
+    display: grid;
+    grid-template-rows: 20% 80%;
+    color: white;
+    height: 100%;
+    width: 100%;
+    background-image: url("img/links-bg.jpg");
+}
+
+.tl-start-header {
+    display: grid;
+    grid-template-columns: 5% 95%;
+}
+
+.tl-header-name {
+    line-height: 56px;
+}
+
+.tl-start-tab-panel {
+    color: black;
+    background-color: white;
+    margin: 0 20%;
+}
+
+.tl-logo {
+    height: 40px;
+    padding: 10% 10% 10% 20%;
+}
+
+material-tab {
+    display: flex;
+}
+
+login-tab, signup-tab {
+    flex-grow: 1;
+}

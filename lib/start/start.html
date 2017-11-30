@@ -1,8 +1,14 @@
-<div class="tl-start">
-    <div class="tl-start-header"></div>
-    <div class="tl-start-content">
-        <div class="tl-start-description"></div>
-        <div class="tl-start-signup"></div>
-        <div class="tl-start-login"></div>
-    </div>
+<div class="tl-start-header">
+    <img class="tl-logo" src="img/logo.svg" alt="Links Logo">
+    <div class="tl-header-name">TryLinks Login/Signup</div>
+</div>
+<div class="tl-start-content">
+    <material-tab-panel class="tl-start-tab-panel">
+        <material-tab label="Login">
+            <login-tab *deferredContent></login-tab>
+        </material-tab>
+        <material-tab label="Signup">
+            <signup-tab *deferredContent></signup-tab>
+        </material-tab>
+    </material-tab-panel>
 </div>

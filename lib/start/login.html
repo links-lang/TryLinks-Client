@@ -1,5 +1,14 @@
 <div class="tl-login">
-    <material-input [(ngModel)]="username" label="Username" type="text"></material-input>
-    <material-input [(ngModel)]="password" label="Password" type="password"></material-input>
+    <material-input required
+                    [error]="usernameErrorMsg"
+                    [(ngModel)]="username"
+                    label="Username"
+                    type="text">
+    </material-input>
+    <material-input required
+                    [(ngModel)]="password"
+                    label="Password"
+                    type="password">
+    </material-input>
     <material-button raised (trigger)="onLogin()">Log in</material-button>
 </div>

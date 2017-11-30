@@ -1,8 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:client/start/login.dart';
-import 'package:client/start/signup.dart';
+import 'package:client/start/start.dart';
 import 'package:client/welcome/welcome.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
@@ -26,9 +25,9 @@ import 'package:client/welcome/welcome.dart';
       component: WelcomePageComponent,
       useAsDefault: true),
   const Route(
-      path: '/signup',
-      name: 'Signup',
-      component: SignupTabComponent),
+      path: '/start',
+      name: 'Start',
+      component: StartPageComponent),
 ])
 class AppComponent {
 }
