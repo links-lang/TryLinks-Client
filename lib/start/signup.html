@@ -1,22 +1,26 @@
 <div class="tl-signup">
     <material-input required
+                    floatingLabel
                     [error]="usernameErrorMsg"
                     [(ngModel)]="username"
                     label="Username"
                     type="text">
     </material-input>
-    <material-input [error]="emailErrorMsg"
+    <material-input floatingLabel
+                    [error]="emailErrorMsg"
                     [(ngModel)]="email"
                     label="Email"
                     type="email">
     </material-input>
     <material-input required
+                    floatingLabel
                     [error]="passwordErrorMsg"
                     [(ngModel)]="password"
                     label="Password"
                     type="password">
     </material-input>
     <material-input required
+                    floatingLabel
                     [error]="passwordErrorMsg"
                     [(ngModel)]="con_password"
                     label="Confirm Password"

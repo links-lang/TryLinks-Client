@@ -1,11 +1,13 @@
 <div class="tl-login">
     <material-input required
+                    floatingLabel
                     [error]="usernameErrorMsg"
                     [(ngModel)]="username"
                     label="Username"
                     type="text">
     </material-input>
     <material-input required
+                    floatingLabel
                     [(ngModel)]="password"
                     label="Password"
                     type="password">

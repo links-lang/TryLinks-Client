@@ -1,0 +1,35 @@
+:host {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    height: 100%;
+    width: 100%;
+    background-image: url("img/links-bg.jpg");
+    color: white;
+}
+
+.tl-interactive-content {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    padding: 5% 10%;
+}
+
+.tl-interactive-shell {
+    background-color: black;
+    color: greenyellow;
+    overflow: scroll;
+}
+
+.tl-interactive-header {
+    display: grid;
+    grid-template-columns: 5% 95%;
+    font-family: monospace;
+}
+
+.tl-header-name {
+    line-height: 56px;
+}
+
+.tl-logo {
+    height: 40px;
+    padding: 10% 10% 10% 20%;
+}

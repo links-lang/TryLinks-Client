@@ -14,7 +14,7 @@ import 'package:client/start/signup.dart';
       MaterialTabPanelComponent,
       LoginTabComponent,
       SignupTabComponent,
-    ])
+])
 class StartPageComponent {
 
 }

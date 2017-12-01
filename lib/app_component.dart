@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:client/interactive/interactive.dart';
 import 'package:client/start/start.dart';
 import 'package:client/welcome/welcome.dart';
 
@@ -28,6 +29,10 @@ import 'package:client/welcome/welcome.dart';
       path: '/start',
       name: 'Start',
       component: StartPageComponent),
+  const Route(
+      path: '/interactive',
+      name: 'Interactive',
+      component: InteractiveShellPageComponent),
 ])
 class AppComponent {
 }
