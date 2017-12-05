@@ -15,8 +15,7 @@
 
 .tl-interactive-shell {
     background-color: black;
-    color: greenyellow;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .tl-interactive-header {
@@ -32,4 +31,9 @@
 .tl-logo {
     height: 40px;
     padding: 10% 10% 10% 20%;
+}
+
+.tl-interactive-input {
+    padding-left: 8px;
+    background-color: transparent;
 }

@@ -9,6 +9,12 @@
         You can find some pointers to the syntax <a href="http://links-lang.org/quick-help.html">here</a>, Have fun exploring Links!
     </div>
     <div class="tl-interactive-shell">
-        <div *ngFor="let line of allLines">{{line}}</div>
+        <shell-line *ngFor="let line of allLines" [line]="line"></shell-line>
+        <material-input #shellInput
+                        class="tl-interactive-input"
+                        leadingText="{{inputPrompt}}"
+                        (change)="onInputChange()"
+                        type="text">
+        </material-input>
     </div>
 </div>
