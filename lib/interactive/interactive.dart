@@ -66,13 +66,3 @@ class InteractiveShellPageComponent implements OnInit{
     shellInput.inputText = '';
   }
 }
-
-List<ShellLine> mockLines = [
-  new ShellLine(LineType.USER_INPUT, 'var a = 2;'),
-  new ShellLine(LineType.STDERR, 'a = 2 : Int'),
-  new ShellLine(LineType.USER_INPUT, 'var b = 3;'),
-  new ShellLine(LineType.STDERR, 'b = 3 : Int'),
-  new ShellLine(LineType.USER_INPUT, 'a + b;'),
-  new ShellLine(LineType.STDOUT, '5 : Int'),
-];
-

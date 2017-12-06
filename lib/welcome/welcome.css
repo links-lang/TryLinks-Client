@@ -1,8 +1,6 @@
 .tl-welcome {
     height: 100%;
     width: 100%;
-    background-image: url("img/links-bg.jpg");
-    color: white;
     display: grid;
     grid-template-rows: 15% 70% 15%;
 }

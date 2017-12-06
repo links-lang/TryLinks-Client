@@ -1,10 +1,8 @@
 :host {
     display: grid;
     grid-template-rows: 20% 80%;
-    color: white;
     height: 100%;
     width: 100%;
-    background-image: url("img/links-bg.jpg");
 }
 
 .tl-start-header {
