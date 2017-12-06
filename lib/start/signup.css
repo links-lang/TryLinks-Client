@@ -2,3 +2,7 @@
     display: grid;
     justify-items: center;
 }
+
+.info-dialog {
+    color: black;
+}

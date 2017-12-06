@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular_router/angular_router.dart';
+import 'package:client/service/trylinks_service.dart';
 import 'package:validator/validator.dart';
 
 @Component(
@@ -15,16 +18,26 @@ class LoginTabComponent {
 
   String username;
   String password;
-  String usernameErrorMsg;
+  String errorMsg;
 
-  void onLogin() {
+  TryLinksService _service;
+  Router _router;
+
+  LoginTabComponent(this._router, this._service);
+
+  Future onLogin() async {
     // Validate Username.
     if (!isAlphanumeric(username)) {
-      usernameErrorMsg = "Username cannot have non-alphanumberic characters";
-      return;
+      errorMsg = "Username cannot have non-alphanumberic characters";
+      return null;
     }
 
-    print("User $username wants to login with password: $password");
+    final result = await _service.login(username, password);
+    if (result) {
+      _router.navigate(['Interactive']);
+    } else {
+      errorMsg = 'Incorrect username or password.';
+    }
   }
 
 }

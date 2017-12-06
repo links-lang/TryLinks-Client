@@ -3,12 +3,14 @@
                     floatingLabel
                     [error]="usernameErrorMsg"
                     [(ngModel)]="username"
+                    (inputKeyPress)="clearErrorMsg()"
                     label="Username"
                     type="text">
     </material-input>
     <material-input floatingLabel
                     [error]="emailErrorMsg"
                     [(ngModel)]="email"
+                    (inputKeyPress)="clearErrorMsg()"
                     label="Email"
                     type="email">
     </material-input>
@@ -16,6 +18,7 @@
                     floatingLabel
                     [error]="passwordErrorMsg"
                     [(ngModel)]="password"
+                    (inputKeyPress)="clearErrorMsg()"
                     label="Password"
                     type="password">
     </material-input>
@@ -23,8 +26,23 @@
                     floatingLabel
                     [error]="passwordErrorMsg"
                     [(ngModel)]="con_password"
+                    (inputKeyPress)="clearErrorMsg()"
                     label="Confirm Password"
                     type="password">
     </material-input>
     <material-button raised (trigger)="onSignup()">Sign Up</material-button>
 </div>
+<modal [(visible)]="showGotoLoginDialog">
+    <material-dialog info
+                     class="info-dialog"
+                     [autoDismissable]="showGotoLoginDialog"
+                     (dismiss)="showGotoLoginDialog = false">
+        <div header>
+            <material-button icon autoFocus (trigger)="showGotoLoginDialog = false">
+                <material-icon icon="close"></material-icon>
+            </material-button>
+            <h3>Signup Successful</h3>
+        </div>
+        <p>You have successfully signed up! Please go to "Login" Tab and login.</p>
+    </material-dialog>
+</modal>
