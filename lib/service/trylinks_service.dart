@@ -66,14 +66,16 @@ class TryLinksService {
     }
   }
 
-  Future<bool> startInteractiveMode() async {
+  Future<String> startInteractiveMode() async {
     try {
-      final response = await _http.post(_interactiveUrl, headers: _headers);
-      return response.statusCode == 200;
+      final response = await _http.get(_interactiveUrl, headers: _headers);
+      final socketPath = JSON.decode(response.body)['path'];
+      print(socketPath);
+      return socketPath;
     } catch (e) {
       print("InteractiveUrl API failed with the following detail:\n");
       print(e.toString());
-      return false;
+      return null;
     }
   }
 }

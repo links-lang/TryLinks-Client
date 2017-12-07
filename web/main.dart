@@ -9,7 +9,7 @@ void main() {
   bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
     provide(LocationStrategy, useClass: HashLocationStrategy),
-    provide(BrowserClient, useFactory: () => new BrowserClient(), deps: []),
+    provide(BrowserClient, useFactory: () => new BrowserClient()..withCredentials = true, deps: []),
     TryLinksService,
   ]);
 }

@@ -1,7 +1,9 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 
+import 'package:angular_router/angular_router.dart';
 import 'package:client/interactive/shell_line.dart';
+import 'package:client/service/trylinks_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 @Component(
@@ -28,10 +30,24 @@ class InteractiveShellPageComponent implements OnInit{
 
   String inputPrompt = 'links> ';
 
+  TryLinksService _service;
+  Router _router;
+
+  InteractiveShellPageComponent(this._router, this._service);
+
   @override
   ngOnInit() async {
-    String namespace = 'http://localhost:5000/nickwu';
 
+    String socketPath = await _service.startInteractiveMode();
+
+    if (socketPath == null) {
+      print('logging out.');
+      _router.navigate(['Welcome']);
+      return;
+    }
+
+    String namespace = 'http://localhost:5000' + socketPath;
+    print('connecting to $namespace');
     socket = IO.io(namespace);
     socket.on('connect', (_) {
       print('connected to $namespace');
