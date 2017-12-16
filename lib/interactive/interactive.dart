@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 
@@ -67,7 +68,7 @@ class InteractiveShellPageComponent implements OnInit{
   void onInputChange() {
     // TODO: Add user input validation.
 
-    // TODO: Add scroll to bottom logic.
+    scrollToBottom();
 
     currentCmd += "\n" + shellInput.inputText;
     if (shellInput.inputText.endsWith(";")) {
@@ -80,5 +81,10 @@ class InteractiveShellPageComponent implements OnInit{
     }
     allLines.add(new ShellLine(LineType.USER_INPUT, shellInput.inputText));
     shellInput.inputText = '';
+  }
+
+  void scrollToBottom() {
+    Element shell = querySelector(".tl-interactive-shell");
+    shell.scrollTop = shell.scrollHeight;
   }
 }
