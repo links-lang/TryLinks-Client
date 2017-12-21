@@ -54,20 +54,18 @@ class InteractiveShellPageComponent implements OnInit{
       print('connected to $namespace');
 
       socket.on('shell output', (output) {
-        print(output);
         allLines.add(new ShellLine(LineType.STDOUT, output));
+        scrollToBottom();
       });
 
       socket.on('shell error', (error) {
-        print(error);
         allLines.add(new ShellLine(LineType.STDERR, error));
+        scrollToBottom();
       });
     });
   }
 
   void onInputChange() {
-    // TODO: Add user input validation.
-
     scrollToBottom();
 
     currentCmd += "\n" + shellInput.inputText;
