@@ -1,8 +1,10 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:client/dashboard/dashboard.dart';
 import 'package:client/interactive/interactive.dart';
 import 'package:client/start/start.dart';
+import 'package:client/tutorial/tutorial.dart';
 import 'package:client/welcome/welcome.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
@@ -30,9 +32,17 @@ import 'package:client/welcome/welcome.dart';
       name: 'Start',
       component: StartPageComponent),
   const Route(
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: DashboardPageComponent),
+  const Route(
       path: '/interactive',
       name: 'Interactive',
       component: InteractiveShellPageComponent),
+  const Route(
+      path: '/tutorial/:id',
+      name: 'Tutorial',
+      component: TutorialPageComponent),
 ])
 class AppComponent {
 }

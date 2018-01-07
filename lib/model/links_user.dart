@@ -1,5 +1,4 @@
 class LinksUser {
-  String userId;
   String username;
   String email;
   int last_tutorial;

@@ -1,0 +1,18 @@
+<div class="tl-logo">
+    <img src="img/logo.svg" alt="Links Logo">
+</div>
+<div class="tl-welcome-msg">Hello, {{username}}</div>
+<div class="tl-dashboard-interactive">
+    <h3 class="tl-dashboard-content-header">Interactive Mode</h3>
+    <p class="tl-dashboard-content-desc">
+        You can play with Links language and get familiar with the syntax through our Interactive Links Shell.
+    </p>
+    <material-button class="tl-nav-button" dense raised (trigger)="gotoInteractivePage()">REPL</material-button>
+</div>
+<div class="tl-dashboard-tutorial">
+    <h3 class="tl-dashboard-content-header">Tutorials</h3>
+    <p class="tl-dashboard-content-desc">
+        We also have a short series of tutorials which teach you how to use Links for web programming. Take a tour!
+    </p>
+    <material-button class="tl-nav-button" dense raised (trigger)="gotoTutorialPage()">Tutorials</material-button>
+</div>

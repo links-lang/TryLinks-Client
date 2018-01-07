@@ -34,7 +34,7 @@ class LoginTabComponent {
 
     final result = await _service.login(username, password);
     if (result) {
-      _router.navigate(['Interactive']);
+      _router.navigate(['Dashboard']);
     } else {
       errorMsg = 'Incorrect username or password.';
     }

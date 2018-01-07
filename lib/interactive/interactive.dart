@@ -38,6 +38,11 @@ class InteractiveShellPageComponent implements OnInit{
 
   @override
   ngOnInit() async {
+    if (_service.user == null) {
+      print('logging out.');
+      _router.navigate(['Welcome']);
+      return;
+    }
 
     String socketPath = await _service.startInteractiveMode();
 

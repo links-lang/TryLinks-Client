@@ -1,0 +1,47 @@
+:host {
+    display: grid;
+    grid-template-rows: 10% 10% 90%;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 8px;
+}
+
+.tl-logo {
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
+}
+
+.tl-nav-button {
+    background-color: deepskyblue;
+}
+
+.tl-dashboard-content-header {
+    text-align: center;
+}
+
+.tl-dashboard-content-desc {
+    font-family: monospace;
+}
+
+.tl-welcome-msg {
+    grid-row: 1 / 2;
+    grid-column: 3 / 13;
+    font-family: fantasy;
+    font-size: 24px;
+    padding-top: 10%;
+}
+
+.tl-dashboard-interactive {
+    grid-row: 3 / 4;
+    grid-column: 2 / 6;
+
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+}
+
+.tl-dashboard-tutorial {
+    grid-row: 3 / 4;
+    grid-column: 8 / 12;
+
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+}
