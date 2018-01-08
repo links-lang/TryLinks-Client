@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:client/service/trylinks_service.dart';
@@ -25,12 +26,15 @@ class TutorialPageComponent implements OnInit{
   final TryLinksService _service;
   final Router _router;
   final RouteParams _routeParams;
+  final DomSanitizationService _sanitizer;
   int id;
   CodeMirror editor;
 
-  TutorialPageComponent(this._service, this._router, this._routeParams);
+  TutorialPageComponent(this._service, this._router, this._routeParams, this._sanitizer);
 
   List<String> get headers => tutorialHeaders;
+
+  SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:8000');
 
   @override
   ngOnInit() {
@@ -43,10 +47,12 @@ class TutorialPageComponent implements OnInit{
 
     Map options = {
       'mode':  'javascript',
-      'theme': 'monokai'
+      'theme': 'monokai',
+      'lineNumbers': true,
     };
 
-    this.editor = new CodeMirror.fromElement(
-        querySelector('div.tl-tutorial-main-editor'), options: options);
+    this.editor = new CodeMirror.fromTextArea(
+        querySelector('textarea.tl-tutorial-main-editor'), options: options);
+    this.editor.setSize('100%', '100%');
   }
 }
