@@ -31,10 +31,7 @@ class DashboardPageComponent implements OnInit {
   }
 
   void gotoTutorialPage() {
-    _router.navigate([
-      'Tutorial',
-      {"id": _service.user.last_tutorial}
-    ]);
+    _router.navigate(['Tutorial']);
   }
 
   String get username => _service.user == null ? '' : _service.user.username;

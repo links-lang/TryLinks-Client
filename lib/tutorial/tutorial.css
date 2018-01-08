@@ -1,1 +1,29 @@
+.tl-tutorial-nav .drawer-content {
+  width: auto;
+}
 
+a {
+  color: deepskyblue;
+}
+
+.tl-logo {
+  height: 40px;
+}
+
+.tl-tutorial-main-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: white;
+  color: black;
+  height: 90%;
+}
+
+.tl-tutorial-main-desc {
+  overflow: auto;
+  border: white solid 1px;
+  background-color: lightgrey;
+}
+
+.CodeMirror {
+  height: 100%;
+}
