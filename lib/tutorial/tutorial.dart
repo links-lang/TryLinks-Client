@@ -18,6 +18,7 @@ import 'package:codemirror/codemirror.dart';
     materialDirectives,
     DeferredContentDirective,
     NgFor,
+    NgIf,
     ROUTER_DIRECTIVES,
   ],
 )
@@ -36,6 +37,19 @@ class TutorialPageComponent implements OnInit{
 
   SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:8000');
 
+  int port;
+
+  String compileError = r'''
+  *** Parse error: tmp/nickwu_source.links:12
+
+    servePages()
+               ^''';
+
+  void onCompile() {
+    print('You want to compile the current Links program');
+    if (port == null) port = 8000; else port = null;
+  }
+
   @override
   ngOnInit() {
     var _id = _routeParams.get('id');
@@ -49,10 +63,11 @@ class TutorialPageComponent implements OnInit{
       'mode':  'javascript',
       'theme': 'monokai',
       'lineNumbers': true,
+      'autofocus': true,
     };
 
     this.editor = new CodeMirror.fromTextArea(
         querySelector('textarea.tl-tutorial-main-editor'), options: options);
-    this.editor.setSize('100%', '100%');
+    this.editor.setSize('100%', '80%');
   }
 }

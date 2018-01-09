@@ -23,3 +23,27 @@ a {
   border: white solid 1px;
   background-color: lightgrey;
 }
+
+.tl-tutorial-main-render-control {
+  height: 20%;
+  overflow: auto;
+  background-color: lightgrey;
+  color: red;
+}
+
+.tl-compile-btn {
+  color: white;
+  background-color: deepskyblue;
+  position: absolute;
+  right: 34%;
+  bottom: 3%;
+}
+
+.tl-tutorial-main-render-empty {
+  color: grey;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}

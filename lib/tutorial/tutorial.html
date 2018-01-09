@@ -24,10 +24,22 @@
     <div class="tl-tutorial-main-content">
         <div class="tl-tutorial-main-desc tl-tutorial-main-col">
         </div>
-        <textarea class="tl-tutorial-main-editor tl-tutorial-main-col">
-        </textarea>
+        <div class="tl-tutorial-main-col">
+            <textarea class="tl-tutorial-main-editor"></textarea>
+            <div class="tl-tutorial-main-render-control">
+                <pre class="tl-tutorial-main-render-error">{{compileError}}</pre>
+                <material-button class="tl-compile-btn" dense raised (trigger)="onCompile()">
+                    Save and Compile
+                </material-button>
+            </div>
+        </div>
+
         <div class="tl-tutorial-main-render tl-tutorial-main-col">
-            <iframe [src]="renderUrl" height="100%" width="100%"></iframe>
+            <div *ngIf="port == null" class="tl-tutorial-main-render-empty">
+                <h2>Preview Page</h2>
+                <p>When you are happy with your Links code, <br>press the "Compile" button below and see the web page generated!</p>
+            </div>
+            <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%"></iframe>
         </div>
     </div>
 </material-content>
