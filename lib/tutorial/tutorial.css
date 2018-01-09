@@ -20,8 +20,7 @@ a {
 
 .tl-tutorial-main-desc {
   overflow: auto;
-  border: white solid 1px;
-  background-color: lightgrey;
+  border: black solid 1px;
 }
 
 .tl-tutorial-main-render-control {

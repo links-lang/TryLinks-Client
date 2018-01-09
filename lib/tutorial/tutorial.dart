@@ -12,7 +12,8 @@ import 'package:codemirror/codemirror.dart';
   selector: 'tutorial-page',
   templateUrl: 'tutorial.html',
   styleUrls: const [
-    'tutorial.css'
+    'tutorial.css',
+    'markdown.css'
   ],
   directives: const[
     materialDirectives,
@@ -57,7 +58,7 @@ class TutorialPageComponent implements OnInit{
     // TODO: add check for id not null.
     print(this.id);
     querySelector('div.tl-tutorial-main-desc')
-        .setInnerHtml(markdownToHtml(tutorialDescs[0]));
+        .setInnerHtml(markdownToHtml(tutorialDescs[3]));
 
     Map options = {
       'mode':  'javascript',
