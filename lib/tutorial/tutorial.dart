@@ -43,11 +43,7 @@ class TutorialPageComponent implements OnInit{
 
   int port;
 
-  String compileError = r'''
-  *** Parse error: tmp/nickwu_source.links:12
-
-    servePages()
-               ^''';
+  String compileError = "";
 
   Future onCompile() async {
     print('You want to compile the current Links program');

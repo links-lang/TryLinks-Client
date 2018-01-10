@@ -23,11 +23,11 @@ The `main` function calls `addRoute` to install the `mainPage` handler as the de
 
 ## Exercises
  
- * Change the program by modifying the content of the HTML body, or adding content (such as a page title) under the `<head>` tag. Does this work? What happens if you add HTML with unbalanced tags, e.g. `<p> test <b> bold </p>`?
+1. Change the program by modifying the content of the HTML body, or adding content (such as a page title) under the `<head>` tag. Does this work? What happens if you add HTML with unbalanced tags, e.g. `<p> test <b> bold </p>`?
 
- * In Links, there is a difference between a `page` (which is a legitimate response to an HTTP request) and plain XML. What happens if you omit the keyword `page` from `mainPage`?
+2. In Links, there is a difference between a `page` (which is a legitimate response to an HTTP request) and plain XML. What happens if you omit the keyword `page` from `mainPage`?
 
- * If you are familiar with CSS or JavaScript, what happens if you include a `<style>` or `<script>` tag in the page content?
+3. If you are familiar with CSS or JavaScript, what happens if you include a `<style>` or `<script>` tag in the page content?
 
 ''',
   r'''
@@ -53,15 +53,15 @@ The `handleForm` function simply constructs a new page that shows the submitted 
 
 ## Exercises
 
- * What happens if you leave off the `l:` prefix of the `name` attribute? Is the error message you get enlightening?
+1. What happens if you leave off the `l:` prefix of the `name` attribute? Is the error message you get enlightening?
 
- * What happens if you leave off the `l:` prefix of the `action` attribute? Is the error message you get enlightening?
+2. What happens if you leave off the `l:` prefix of the `action` attribute? Is the error message you get enlightening?
 
- * What happens if you leave off the curly braces in the `l:action` attribute value `"{handleForm(s,stringToInt(i))}"`?
+3. What happens if you leave off the curly braces in the `l:action` attribute value `"{handleForm(s,stringToInt(i))}"`?
 
- * What happens if you return something other than a page from the `l:action` attribute value? For example, change to `{(s,i)}`?
+4. What happens if you return something other than a page from the `l:action` attribute value? For example, change to `{(s,i)}`?
 
- * Experiment with including other standard HTML form elements such as `textarea`, `radio`, `checkbox`.
+5. Experiment with including other standard HTML form elements such as `textarea`, `radio`, `checkbox`.
   ''',
   r'''
 ## Lesson 3: Client side forms
@@ -78,9 +78,9 @@ Here, the Links code called when the form is submitted is `handleForm(s,stringTo
 
 ## Exercises
 
-* What happens if you change `l:onsubmit` to `l:action`?
+1. What happens if you change `l:onsubmit` to `l:action`?
 
- * Modify the code to behave appropriately (e.g. showing an error message instead of the form results) if the value of the integer field is not a valid number. (Hint: Links supports regular expression matching e.g. `str =~ /a*b*/` tests whether a string `str` is a sequence of zero or more `a`s followed by zero or more `b`s).
+2. Modify the code to behave appropriately (e.g. showing an error message instead of the form results) if the value of the integer field is not a valid number. (Hint: Links supports regular expression matching e.g. `str =~ /a*b*/` tests whether a string `str` is a sequence of zero or more `a`s followed by zero or more `b`s).
   ''',
   r'''
 ## Lesson 4: Client side TODO list
@@ -99,13 +99,13 @@ Finally, the `remove` function traverses the todo list and removes the item(s) w
 
 ## Exercises
 
- * What happens if you stop the Links interpreter and restart it? Is the todo list persistent?
+1. What happens if you stop the Links interpreter and restart it? Is the todo list persistent?
 
- * What happens if you visit the todo list from two different browser windows? Is the todo list shared across them?
+2. What happens if you visit the todo list from two different browser windows? Is the todo list shared across them?
 
- * What happens if you add multiple identical items to the todo list? What happens if you try to remove one of them? How could we change this behavior?
+3. What happens if you add multiple identical items to the todo list? What happens if you try to remove one of them? How could we change this behavior?
 
- * Links's comprehension syntax allows for where clauses, as follows:
+4. Links's comprehension syntax allows for where clauses, as follows:
 
 ~~~
 for (x <- [1,2,3]) where (x == 2) [x+10]
