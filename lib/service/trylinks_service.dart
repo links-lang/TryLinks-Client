@@ -14,6 +14,12 @@ class TryLinksService {
   static final String _updateUserUrl = 'http://localhost:5000/api/user/update';
   static final String _interactiveUrl =
       'http://localhost:5000/api/initInteractive';
+  static final String _compileUrl =
+      'http://localhost:5000/api/compile';
+  static final String _fileReadUrl =
+      'http://localhost:5000/api/file/read';
+  static final String _fileWriteUrl =
+      'http://localhost:5000/api/file/write';
   LinksUser user;
 
   TryLinksService(this._http);
@@ -89,6 +95,58 @@ class TryLinksService {
       print("InteractiveUrl API failed with the following detail:\n");
       print(e.toString());
       return null;
+    }
+  }
+
+  Future<String> compileAndDeploy() async {
+    try {
+      final response = await _http.get(_compileUrl, headers: _headers);
+      final socketPath = JSON.decode(response.body)['path'];
+      print(socketPath);
+      return socketPath;
+    } catch (e) {
+      print("InteractiveUrl API failed with the following detail:\n");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<String> getTutorialSource(int id) async {
+    try {
+      final response = await _http.post(
+          _fileReadUrl,
+          headers: _headers,
+          body: JSON.encode({
+            'tutorial': id
+          }));
+      if (response.statusCode == 200) {
+        var result = JSON.decode(response.body);
+        print(result);
+        return result["fileData"];
+      } else {
+        return "";
+      }
+    } catch (e) {
+      print("File Read API failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<bool> saveTutorialSource(int id, String source) async {
+    try {
+      final response = await _http.post(
+          _fileWriteUrl,
+          headers: _headers,
+          body: JSON.encode({
+            'tutorial': id,
+            'fileData': source,
+          }));
+      return response.statusCode == 200;
+    } catch (e) {
+      print("File Read API failed");
+      print(e.toString());
+      return false;
     }
   }
 }

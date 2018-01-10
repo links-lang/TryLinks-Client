@@ -21,6 +21,7 @@ a {
 .tl-tutorial-main-desc {
   overflow: auto;
   border: black solid 1px;
+  padding: 0 12px;
 }
 
 .tl-tutorial-main-render-control {

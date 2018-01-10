@@ -17,3 +17,7 @@ body {
     background-image: url("img/links-bg.jpg");
     color: white;
 }
+
+* {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
