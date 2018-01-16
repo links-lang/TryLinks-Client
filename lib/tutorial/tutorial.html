@@ -2,8 +2,8 @@
     <material-list *deferredContent>
         <div group>
             <div label>Tutorials</div>
-            <material-list-item *ngFor="let header of headers">
-                <span class="tl-tutorial-header">{{header}}</span>
+            <material-list-item *ngFor="let header of headers; let i=index" class="tl-nav-item">
+                <material-button (trigger)="navToTutorial(i)" class="tl-tutorial-header">{{header}}</material-button>
             </material-list-item>
         </div>
     </material-list>

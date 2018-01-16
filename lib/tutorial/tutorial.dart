@@ -45,6 +45,13 @@ class TutorialPageComponent implements OnInit{
 
   String compileError = "";
 
+  void navToTutorial(int i) {
+    this.id = i;
+    port = null;
+    socket.disconnect();
+    _router.navigate(['Tutorial', {"id": (i + 1).toString()}]);
+  }
+
   Future onCompile() async {
     print('You want to compile the current Links program');
     await _service.saveTutorialSource(this.id, this.editor.getDoc().getValue());
@@ -90,9 +97,9 @@ class TutorialPageComponent implements OnInit{
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
     // TODO: add check for id not null.
-    print(this.id);
+    this.id -= 1;
     querySelector('div.tl-tutorial-main-desc')
-        .setInnerHtml(markdownToHtml(tutorialDescs[id-1]));
+        .setInnerHtml(markdownToHtml(tutorialDescs[id]));
 
     Map options = {
       'mode':  'OCaml',

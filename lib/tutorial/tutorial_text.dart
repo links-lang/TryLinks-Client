@@ -3,8 +3,6 @@ const tutorialHeaders = const [
   '2: Simple forms',
   '3: Client-side forms',
   '4: Client-side TODO list',
-  '5: Factorial: Querying tables',
-  '6: Database TODO list',
 ];
 
 const tutorialDescs = const [

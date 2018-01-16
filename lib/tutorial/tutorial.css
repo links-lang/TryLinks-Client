@@ -47,3 +47,7 @@ a {
   justify-content: center;
   height: 100%;
 }
+
+.tl-nav-item {
+  padding: 0;
+}
