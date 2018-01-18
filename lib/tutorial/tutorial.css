@@ -6,6 +6,12 @@ a {
   color: deepskyblue;
 }
 
+.CodeMirror {
+  height: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
 .tl-logo {
   height: 40px;
 }
@@ -25,10 +31,14 @@ a {
 }
 
 .tl-tutorial-main-render-control {
-  height: 20%;
   overflow: auto;
   background-color: lightgrey;
   color: red;
+}
+
+.tl-tutorial-main-col {
+  display: grid;
+  grid-template-rows: 600px 1fr;
 }
 
 .tl-compile-btn {

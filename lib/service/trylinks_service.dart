@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:client/model/links_user.dart';
 import 'package:http/browser_client.dart';
@@ -14,15 +15,19 @@ class TryLinksService {
   static final String _updateUserUrl = 'http://localhost:5000/api/user/update';
   static final String _interactiveUrl =
       'http://localhost:5000/api/initInteractive';
-  static final String _compileUrl =
-      'http://localhost:5000/api/compile';
-  static final String _fileReadUrl =
-      'http://localhost:5000/api/file/read';
-  static final String _fileWriteUrl =
-      'http://localhost:5000/api/file/write';
-  LinksUser user;
+  static final String _compileUrl = 'http://localhost:5000/api/compile';
+  static final String _fileReadUrl = 'http://localhost:5000/api/file/read';
+  static final String _fileWriteUrl = 'http://localhost:5000/api/file/write';
 
   TryLinksService(this._http);
+
+  String getUsername() => window.localStorage.containsKey('username')
+      ? window.localStorage['username']
+      : 'user';
+
+  String getLastTutorial() => window.localStorage.containsKey('last_tutorial')
+      ? window.localStorage['last_tutorial']
+      : '0';
 
   Future<bool> signup(String username, String email, String password) async {
     try {
@@ -51,9 +56,8 @@ class TryLinksService {
           }));
       if (response.statusCode == 200) {
         var result = JSON.decode(response.body);
-        print(result);
-        user = new LinksUser(result["data"]["username"],
-            result["data"]["email"], result["data"]["last_tutorial"]);
+        window.localStorage['username'] = username;
+        window.localStorage['last_tutorial'] = result["data"]["last_tutorial"];
       }
       return response.statusCode == 200;
     } catch (e) {
@@ -63,19 +67,19 @@ class TryLinksService {
     }
   }
 
-  Future<bool> updateUser(String username,
-      [String email, String password, int lastTutorial]) async {
+  Future<bool> updateUser(
+      {String email, String password, int lastTutorial}) async {
     try {
       final response = await _http.post(_updateUserUrl,
           headers: _headers,
           body: JSON.encode({
-            'username': username,
             'email': email,
             'password': password,
             'last_tutorial': lastTutorial,
           }));
       if (response.statusCode == 200) {
-        user.last_tutorial = lastTutorial;
+        var result = JSON.decode(response.body);
+        window.localStorage['last_tutorial'] = result["data"]["last_tutorial"];
       }
       return response.statusCode == 200;
     } catch (e) {
@@ -89,7 +93,6 @@ class TryLinksService {
     try {
       final response = await _http.get(_interactiveUrl, headers: _headers);
       final socketPath = JSON.decode(response.body)['path'];
-      print(socketPath);
       return socketPath;
     } catch (e) {
       print("InteractiveUrl API failed with the following detail:\n");
@@ -102,7 +105,6 @@ class TryLinksService {
     try {
       final response = await _http.get(_compileUrl, headers: _headers);
       final socketPath = JSON.decode(response.body)['path'];
-      print(socketPath);
       return socketPath;
     } catch (e) {
       print("InteractiveUrl API failed with the following detail:\n");
@@ -113,15 +115,10 @@ class TryLinksService {
 
   Future<String> getTutorialSource(int id) async {
     try {
-      final response = await _http.post(
-          _fileReadUrl,
-          headers: _headers,
-          body: JSON.encode({
-            'tutorial': id
-          }));
+      final response = await _http.post(_fileReadUrl,
+          headers: _headers, body: JSON.encode({'tutorial': id}));
       if (response.statusCode == 200) {
         var result = JSON.decode(response.body);
-        print(result);
         return result["fileData"];
       } else {
         return "";
@@ -135,8 +132,7 @@ class TryLinksService {
 
   Future<bool> saveTutorialSource(int id, String source) async {
     try {
-      final response = await _http.post(
-          _fileWriteUrl,
+      final response = await _http.post(_fileWriteUrl,
           headers: _headers,
           body: JSON.encode({
             'tutorial': id,

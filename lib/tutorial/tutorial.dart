@@ -25,7 +25,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     ROUTER_DIRECTIVES,
   ],
 )
-class TutorialPageComponent implements OnInit{
+class TutorialPageComponent implements OnInit, OnDestroy{
 
   final TryLinksService _service;
   final Router _router;
@@ -39,21 +39,22 @@ class TutorialPageComponent implements OnInit{
 
   List<String> get headers => tutorialHeaders;
 
-  SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:8000');
+  SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:$port');
 
   int port;
 
   String compileError = "";
 
-  void navToTutorial(int i) {
+  Future navToTutorial(int i) async {
     this.id = i;
     port = null;
-    socket.disconnect();
-    _router.navigate(['Tutorial', {"id": (i + 1).toString()}]);
+    if (socket != null) socket.disconnect();
+    await _service.updateUser(lastTutorial: i);
+    _router.navigate(['Tutorial', {"id": i.toString()}]);
   }
 
   Future onCompile() async {
-    print('You want to compile the current Links program');
+    print('You want to compile the current Links program with id: ${id}');
     await _service.saveTutorialSource(this.id, this.editor.getDoc().getValue());
     print("saved.");
 
@@ -65,54 +66,68 @@ class TutorialPageComponent implements OnInit{
     }
 
     compileError = "";
-    String namespace = 'http://localhost:5000' + socketPath;
-    print('connecting to $namespace');
-    socket = IO.io(namespace);
-    socket.on('connect', (_) {
-      print('connected to $namespace');
-
-      socket.on('compiled', (port) {
-        print(port);
-        this.port = port;
-      });
-
-      socket.on('compile error', (error) {
-        print(error);
-        this.compileError = error;
-        this.port = null;
-      });
-
-      socket.on('shell error', (error) {
-        print(error);
-        this.compileError = error;
-        this.port = null;
-      });
-
+    if (socket != null && socket.connected) {
+      print('Using existing connection.');
       socket.emit('compile');
-    });
+    } else {
+      String namespace = 'http://localhost:5000' + socketPath;
+      print('connecting to $namespace');
+      socket = IO.io(namespace);
+      socket.on('connect', (_) {
+        print('connected to $namespace');
+
+        socket.on('compiled', (port) {
+          print(port);
+          this.port = port;
+        });
+
+        socket.on('compile error', (error) {
+          print(error);
+          this.compileError = error;
+          this.port = null;
+        });
+
+        socket.on('shell error', (error) {
+          print(error);
+          this.compileError = error;
+          this.port = null;
+        });
+
+        print('emtting compile message');
+        socket.emit('compile');
+      });
+    }
   }
 
   @override
   ngOnInit() async {
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
-    // TODO: add check for id not null.
-    this.id -= 1;
+    if (this.id == null) this.id = 0;
     querySelector('div.tl-tutorial-main-desc')
-        .setInnerHtml(markdownToHtml(tutorialDescs[id]));
+        .setInnerHtml(markdownToHtml(tutorialDescs[this.id]));
 
     Map options = {
-      'mode':  'OCaml',
+      'mode':  'javascript',
       'theme': 'monokai',
       'lineNumbers': true,
       'autofocus': true,
+      'lineWrapping': true,
     };
 
     this.editor = new CodeMirror.fromTextArea(
         querySelector('textarea.tl-tutorial-main-editor'), options: options);
-    this.editor.setSize('100%', '80%');
+    this.editor.setSize('100%', '100%');
 
     String source = await _service.getTutorialSource(this.id);
+    if (source == null) _router.navigate(['Welcome']);
     this.editor.getDoc().setValue(source);
+
+  }
+  @override
+  ngOnDestroy() async {
+    port = null;
+    if (socket != null) socket.disconnect();
+    await _service.updateUser(lastTutorial: this.id);
   }
 }

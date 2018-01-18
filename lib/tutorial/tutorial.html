@@ -22,10 +22,10 @@
         </div>
     </header>
     <div class="tl-tutorial-main-content">
-        <div class="tl-tutorial-main-desc tl-tutorial-main-col markdown-body">
-        </div>
+        <div class="tl-tutorial-main-desc markdown-body"></div>
+
         <div class="tl-tutorial-main-col">
-            <textarea class="tl-tutorial-main-editor"></textarea>
+            <textarea class="tl-tutorial-main-editor CodeMirror-scroll"></textarea>
             <div class="tl-tutorial-main-render-control">
                 <pre class="tl-tutorial-main-render-error">{{compileError}}</pre>
                 <material-button class="tl-compile-btn" dense raised (trigger)="onCompile()">
@@ -34,12 +34,12 @@
             </div>
         </div>
 
-        <div class="tl-tutorial-main-render tl-tutorial-main-col">
+        <div class="tl-tutorial-main-render">
             <div *ngIf="port == null" class="tl-tutorial-main-render-empty">
                 <h2>Preview Page</h2>
                 <p>When you are happy with your Links code, <br>press the "Compile" button below and see the web page generated!</p>
             </div>
-            <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%"></iframe>
+            <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%" onload="return false;"></iframe>
         </div>
     </div>
 </material-content>

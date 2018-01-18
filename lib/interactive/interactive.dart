@@ -18,7 +18,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     materialInputDirectives,
   ],
 )
-class InteractiveShellPageComponent implements OnInit{
+class InteractiveShellPageComponent implements OnInit, OnDestroy{
 
   @ViewChild('shellInput')
   MaterialInputComponent shellInput;
@@ -38,11 +38,6 @@ class InteractiveShellPageComponent implements OnInit{
 
   @override
   ngOnInit() async {
-    if (_service.user == null) {
-      print('logging out.');
-      _router.navigate(['Welcome']);
-      return;
-    }
 
     String socketPath = await _service.startInteractiveMode();
 
@@ -89,5 +84,9 @@ class InteractiveShellPageComponent implements OnInit{
   void scrollToBottom() {
     Element shell = querySelector(".tl-interactive-shell");
     shell.scrollTop = shell.scrollHeight;
+  }
+  @override
+  ngOnDestroy() {
+    if (socket != null) socket.disconnect();
   }
 }

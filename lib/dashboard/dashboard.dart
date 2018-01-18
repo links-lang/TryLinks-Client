@@ -11,28 +11,19 @@ import 'package:client/service/trylinks_service.dart';
     materialDirectives,
   ],
 )
-class DashboardPageComponent implements OnInit {
+class DashboardPageComponent {
   Router _router;
   TryLinksService _service;
 
   DashboardPageComponent(this._router, this._service);
-
-  @override
-  ngOnInit() {
-    if (_service.user == null) {
-      print('logging out.');
-      _router.navigate(['Welcome']);
-      return;
-    }
-  }
 
   void gotoInteractivePage() {
     _router.navigate(['Interactive']);
   }
 
   void gotoTutorialPage() {
-    _router.navigate(['Tutorial', {"id": _service.user.last_tutorial.toString()}]);
+    _router.navigate(['Tutorial', {"id": _service.getLastTutorial()}]);
   }
 
-  String get username => _service.user == null ? '' : _service.user.username;
+  String get username => _service.getUsername();
 }
