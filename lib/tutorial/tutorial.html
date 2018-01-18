@@ -12,13 +12,14 @@
     <header class="material-header shadow">
         <div class="material-header-row">
             <material-button icon
-                             class="material-drawer-button" (trigger)="drawer.toggle()">
+                             class="material-drawer-button"
+                             (trigger)="drawer.toggle()">
                 <material-icon icon="menu"></material-icon>
             </material-button>
             <img class="tl-logo" src="img/logo.svg" alt="Links Logo">
             <span class="tl-tutorial-main-header">TryLinks Tutorials</span>
-            <div class="material-spacer"></div>
-            <a [routerLink]="['Interactive']">Interactive Mode</a>
+            <material-button class="tl-logout-button" (trigger)="logout()">Log out</material-button>
+            <material-button (trigger)="gotoInteractive()">Interactive Mode</material-button>
         </div>
     </header>
     <div class="tl-tutorial-main-content">
@@ -39,7 +40,7 @@
                 <h2>Preview Page</h2>
                 <p>When you are happy with your Links code, <br>press the "Compile" button below and see the web page generated!</p>
             </div>
-            <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%" onload="return false;"></iframe>
+            <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%" onload="return false;" frameborder="0"></iframe>
         </div>
     </div>
 </material-content>

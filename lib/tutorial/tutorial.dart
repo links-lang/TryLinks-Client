@@ -130,4 +130,11 @@ class TutorialPageComponent implements OnInit, OnDestroy{
     if (socket != null) socket.disconnect();
     await _service.updateUser(lastTutorial: this.id);
   }
+
+  gotoInteractive() => _router.navigate(['Interactive']);
+
+  void logout() {
+    _service.logout();
+    _router.navigate(['Welcome']);
+  }
 }

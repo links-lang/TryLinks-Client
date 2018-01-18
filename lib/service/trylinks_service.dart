@@ -145,4 +145,9 @@ class TryLinksService {
       return false;
     }
   }
+
+  void logout() {
+    window.localStorage.remove('username');
+    window.localStorage.remove('last_tutorial');
+  }
 }
