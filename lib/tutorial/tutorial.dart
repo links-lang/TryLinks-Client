@@ -108,11 +108,13 @@ class TutorialPageComponent implements OnInit, OnDestroy{
         .setInnerHtml(markdownToHtml(tutorialDescs[this.id]));
 
     Map options = {
-      'mode':  'javascript',
-      'theme': 'monokai',
+      'mode':  'links',
+      'theme': 'material',
       'lineNumbers': true,
       'autofocus': true,
       'lineWrapping': true,
+      'indentWithTabs': true,
+
     };
 
     this.editor = new CodeMirror.fromTextArea(
@@ -122,7 +124,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
     String source = await _service.getTutorialSource(this.id);
     if (source == null) _router.navigate(['Welcome']);
     this.editor.getDoc().setValue(source);
-
+//    querySelector('.CodeMirror').style.fontFamily = 'monospace';
   }
   @override
   ngOnDestroy() async {
