@@ -124,7 +124,6 @@ class TutorialPageComponent implements OnInit, OnDestroy{
     String source = await _service.getTutorialSource(this.id);
     if (source == null) _router.navigate(['Welcome']);
     this.editor.getDoc().setValue(source);
-//    querySelector('.CodeMirror').style.fontFamily = 'monospace';
   }
   @override
   ngOnDestroy() async {
@@ -134,6 +133,8 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   }
 
   gotoInteractive() => _router.navigate(['Interactive']);
+
+  gotoDashboard() => _router.navigate(['Dashboard']);
 
   void logout() {
     _service.logout();

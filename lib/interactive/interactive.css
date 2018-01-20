@@ -18,7 +18,7 @@
 
 .tl-interactive-header {
     display: grid;
-    grid-template-columns: 5% 95%;
+    grid-template-columns: 60px 4fr 1fr 1fr;
     font-family: monospace;
 }
 

@@ -89,4 +89,11 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
   ngOnDestroy() {
     if (socket != null) socket.disconnect();
   }
+
+  gotoDashboard() => _router.navigate(['Dashboard']);
+
+  void logout() {
+    _service.logout();
+    _router.navigate(['Welcome']);
+  }
 }
