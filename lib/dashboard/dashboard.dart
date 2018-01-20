@@ -25,5 +25,10 @@ class DashboardPageComponent {
     _router.navigate(['Tutorial', {"id": _service.getLastTutorial()}]);
   }
 
+  void logout() {
+    _service.logout();
+    _router.navigate(['Welcome']);
+  }
+
   String get username => _service.getUsername();
 }
