@@ -14,8 +14,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
   selector: 'tutorial-page',
   templateUrl: 'tutorial.html',
   styleUrls: const [
+    'markdown.css',
     'tutorial.css',
-    'markdown.css'
   ],
   directives: const[
     materialDirectives,

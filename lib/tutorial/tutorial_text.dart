@@ -3,6 +3,8 @@ const tutorialHeaders = const [
   '2: Simple forms',
   '3: Client-side forms',
   '4: Client-side TODO list',
+  '5: Factorial: \nQuerying tables',
+  '6: Database TODO list',
 ];
 
 const tutorialDescs = const [
@@ -111,4 +113,112 @@ for (x <- [1,2,3]) where (x == 2) [x+10]
 
 evaluates to [12]. Can you use comprehensions to rewrite remove?
   ''',
+  r'''
+## Lesson 5: Factorial: Querying tables
+
+### Overview
+
+This program exercises (simple) database querying using Links's support for mapping comprehension syntax to queries. (This capability is a form of "language-integrated query", analogous to Microsoft's LINQ).
+
+The main page is a simple form (constructed by function `request`) that accepts an integer, say 5. This form is a little more sophisticated than previous examples: it uses a second event, `l:onkeyup`, to validate the field contents and ensure that the text field can be parsed to an integer. Setting this event handler means that after each key is pressed, the form will be reconstructed by calling `request` with the new text value; this causes the if-then conditional logic to be re-evaluated, which tests whether the field matches a regular expression for nonempty digit sequences (`s =~ /^[0-9]+/`). If not, then the submit button is deactivated.
+
+On submission, the `response` function is called with the field value, and replaces the document content with the results of a database query that pulls in all of the rows where `i` is less than or equal to the number, as a table showing the `i` and `f` values. This is done by the `lookupFactorials` function.
+
+### Queries
+
+Because it involves several new features relating to database connections and querying, we'll go through this function line by line. The first line creates a reference to the database `links`, and binds it to variable `db`. (It is possible to refer to several databases from a single Links program, but writing a query that refers to tables in more than one database results in a run-time error.)
+
+~~~
+var db = database "links";
+~~~
+
+The next line creates a reference to the `factorials` table, which was created earlier for you:
+
+~~~
+var factorials = table "factorials" with (i : Int, f : String) from db;
+~~~
+
+The table reference specifies the names and (Links) types of the table fields, and the database `db` where the table lives.
+
+Finally, the `query` expression runs a query (defined using a comprehension):
+
+~~~
+ query {
+   for (row <-- factorials)
+    where (row.i <= n)
+    orderby (row.i)
+     [(i=row.i, f=row.f)]
+}
+~~~
+
+The `for` line says that the query will consider each row in the `factorials` table. The where line constrains attention to those rows whose `i` field is `<=` n. The `orderby` line sorts the rows by the i field. The last line says that for each iteration of the query we return a new row `[(i=row.i, f=row.f)]`. (It would be equivalent to just return `[row]`.)
+
+One important, but perhaps subtle, difference compared to the comprehension we used in the `todo` list (previous lesson) is that in the line `for (row <-- factorials)`, we use a long arrow <--. The comprehension syntax `for (x <- xs)` with the short arrow is intended for use when `xs` is a list, not a table reference; for a table reference t we use the long arrow. If you get these mixed up, you will get a type error complaining that a list was provided where a table reference was expected, or vice versa.
+
+This query will generate a single SQL query. Links can do many things that a SQL database cannot do, such as printing to the console, or evaluating a recursive function. Using the `query` keyword means that Links will check that the code inside the braces `{...}` can be performed on the database; if this is not the case (for example due to printing or recursive function calls) then Links will raise a compile-time type error. If the query keyword is omitted, then Links will do its best to turn comprehensions into queries, but may fail; that may mean that the query runs very inefficiently, for example by loading all of the data from a table into memory and running the query there. In general, if you expect a part of the program to be performed on the database, enclose it with `query` so that Links will check this.
+
+### Client and server annotations
+
+The other new thing in this example is the annotations `client` and `server` in some of the function definitions. For example `response` has a `client` annotation and `lookupFactorials` has a `server` annotation. These annotations tell Links that these functions should only be executed on the Web client (browser) or only on the server. This is particularly important for database queries. Queries should be run from the server only, because database and table references amount to database connections which will not be meaningful to the Web client. Moreover, making these values available on the Web client can leak important information such as the username and password of the database user.
+
+### Exercises
+
+ 1. What happens if you add a `print` statement or call a recursive function in the middle of a query? What happens if you do this after removing the `query{...}` surrounding the query code?
+
+ 2. Modify the query to return just one row, the row matching the parameter `n`, or to return all rows whose factorial value is larger than `n`.
+
+ 3. What happens if you submit a string such as `5xyz` that starts with a number but includes non-digits? How might you change this behavior to rule this out?
+
+''',
+  r'''
+## Lesson 6: Database TODO list: Updating tables
+
+### Overview
+
+This example program is superficially similar to lesson 4's TODO list. However, instead of storing the TODO list in a list value on the client, this program stores it in the database. So, there are two important differences:
+
+ * Todo list items are persistent in the database and will survive if the Links program terminates and is restarted. (By the same toke, they could also be accessed through the database interactive interface or by other applications with access to the database.)
+ * Todo list items are centralized and different copies of the todo list program running in different browser windows can see the same data.
+
+The user interface for this version of the TODO list program is the same as before, so we won't explain it again. The main differences are in how the list is displayed and changed.
+
+In `showList`, instead of using a list comprehension over an in-memory list, we use a query `query {for (item <-- items) [item]}`. This generates a simple SQL querty that just returns all of the list items. Because `showList` queries the database, we annotate it server so that this happens on the server.
+
+The actions for the insert and remove buttons are also different: they simply call the `add` and `remove` functions. These functions use Links's syntax for database table updates to insert a new element or remove an existing todo list item (by name) from the table:
+
+~~~
+insert items values [(name=name)];
+~~~
+
+inserts a new row `(name=name)` into the `items` table, and
+
+~~~
+delete (r <-- items) where (r.name == name);
+~~~
+
+deletes items matching a Boolean condition.
+
+As before, `add` and `remove` are annotated `server` so that these will be performed on the server.
+
+Links also supports `update` syntax, for example:
+
+~~~
+update (i <-- items)
+   where (i.name == oldname)
+    set (name=newname)
+~~~
+
+renames an item from `oldname` to `newname`.
+
+### Exercises
+
+ 1. What happens if the `server` annotation is removed from `showList`, `add` or `remove`?
+
+ 2. What happens if you replace the `server` annotation with `client` in the above functions?
+
+ 3. Using `update`, modify `todo_db.links` to allow renaming an existing item.
+
+ 4. This version of the TODO list uses `l:action` to handle the form responses by POSTing to the server. Some server communication is unavoidable because we need to get data from teh database, or update the database, but it should be possible to rewrite this program to use `l:onsubmit` to avoid completely rebuilding the page whenever the a button is clicked, using a similar approach to the client-side form in lessons 3 or 5. Modify `todo_db.links` to work this way.
+
+''',
 ];
