@@ -100,7 +100,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   }
 
   @override
-  ngOnInit() async {
+  Future ngOnInit() async {
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
     if (this.id == null) this.id = 0;
@@ -126,15 +126,15 @@ class TutorialPageComponent implements OnInit, OnDestroy{
     this.editor.getDoc().setValue(source);
   }
   @override
-  ngOnDestroy() async {
+  Future ngOnDestroy() async {
     port = null;
     if (socket != null) socket.disconnect();
     await _service.updateUser(lastTutorial: this.id);
   }
 
-  gotoInteractive() => _router.navigate(['Interactive']);
+  void gotoInteractive() => _router.navigate(['Interactive']);
 
-  gotoDashboard() => _router.navigate(['Dashboard']);
+  void gotoDashboard() => _router.navigate(['Dashboard']);
 
   void logout() {
     _service.logout();

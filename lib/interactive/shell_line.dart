@@ -14,11 +14,11 @@ class ShellLineComponent {
 
   String getColor() {
     switch (line.type) {
-      case LineType.USER_INPUT:
+      case LineType.userInput:
         return 'white';
-      case LineType.STDOUT:
+      case LineType.stdout:
         return 'greenyellow';
-      case LineType.STDERR:
+      case LineType.stderr:
         return 'red';
       default:
         return '';
@@ -27,9 +27,9 @@ class ShellLineComponent {
 }
 
 enum LineType {
-  USER_INPUT,
-  STDOUT,
-  STDERR,
+  userInput,
+  stdout,
+  stderr,
 }
 
 class ShellLine {

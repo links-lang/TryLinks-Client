@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'dart:html';
 import 'package:angular/angular.dart';
-import 'package:client/model/links_user.dart';
 import 'package:http/browser_client.dart';
 
 @Injectable()

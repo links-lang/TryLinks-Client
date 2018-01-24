@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
@@ -37,7 +38,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
   InteractiveShellPageComponent(this._router, this._service);
 
   @override
-  ngOnInit() async {
+  Future ngOnInit() async {
 
     String socketPath = await _service.startInteractiveMode();
 
@@ -54,12 +55,12 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
       print('connected to $namespace');
 
       socket.on('shell output', (output) {
-        allLines.add(new ShellLine(LineType.STDOUT, output));
+        allLines.add(new ShellLine(LineType.stdout, output));
         scrollToBottom();
       });
 
       socket.on('shell error', (error) {
-        allLines.add(new ShellLine(LineType.STDERR, error));
+        allLines.add(new ShellLine(LineType.stderr, error));
         scrollToBottom();
       });
     });
@@ -77,7 +78,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     } else {
       inputPrompt = '...... ';
     }
-    allLines.add(new ShellLine(LineType.USER_INPUT, shellInput.inputText));
+    allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
     shellInput.inputText = '';
   }
 
@@ -86,11 +87,11 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     shell.scrollTop = shell.scrollHeight;
   }
   @override
-  ngOnDestroy() {
+  void ngOnDestroy() {
     if (socket != null) socket.disconnect();
   }
 
-  gotoDashboard() => _router.navigate(['Dashboard']);
+  void gotoDashboard() => _router.navigate(['Dashboard']);
 
   void logout() {
     _service.logout();
