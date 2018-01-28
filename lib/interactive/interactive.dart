@@ -5,6 +5,7 @@ import 'package:angular_components/angular_components.dart';
 
 import 'package:angular_router/angular_router.dart';
 import 'package:client/interactive/shell_line.dart';
+import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -17,6 +18,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     NgFor,
     materialDirectives,
     materialInputDirectives,
+    LoadingScreenComponent,
   ],
 )
 class InteractiveShellPageComponent implements OnInit, OnDestroy{
@@ -32,6 +34,8 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
 
   String inputPrompt = 'links> ';
 
+  bool showLoadingDialog = false;
+
   TryLinksService _service;
   Router _router;
 
@@ -39,7 +43,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
 
   @override
   Future ngOnInit() async {
-
+    showLoadingDialog = true;
     String socketPath = await _service.startInteractiveMode();
 
     if (socketPath == null) {
@@ -53,8 +57,8 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     socket = IO.io(namespace);
     socket.on('connect', (_) {
       print('connected to $namespace');
-
       socket.on('shell output', (output) {
+        showLoadingDialog = false;
         allLines.add(new ShellLine(LineType.stdout, output));
         scrollToBottom();
       });
