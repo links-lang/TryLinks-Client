@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:angular_router/angular_router.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:validator/validator.dart';
 
@@ -31,9 +30,8 @@ class SignupTabComponent {
   bool showGotoLoginDialog = false;
 
   TryLinksService _service;
-  Router _router;
 
-  SignupTabComponent(this._router, this._service);
+  SignupTabComponent(this._service);
 
   Future onSignup() async {
     bool valid = true;

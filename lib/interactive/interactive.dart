@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 
 import 'package:angular_router/angular_router.dart';
 import 'package:client/interactive/shell_line.dart';
+import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -16,6 +18,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     NgFor,
     materialDirectives,
     materialInputDirectives,
+    LoadingScreenComponent,
   ],
 )
 class InteractiveShellPageComponent implements OnInit, OnDestroy{
@@ -31,14 +34,16 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
 
   String inputPrompt = 'links> ';
 
+  bool showLoadingDialog = false;
+
   TryLinksService _service;
   Router _router;
 
   InteractiveShellPageComponent(this._router, this._service);
 
   @override
-  ngOnInit() async {
-
+  Future ngOnInit() async {
+    showLoadingDialog = true;
     String socketPath = await _service.startInteractiveMode();
 
     if (socketPath == null) {
@@ -52,14 +57,14 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     socket = IO.io(namespace);
     socket.on('connect', (_) {
       print('connected to $namespace');
-
       socket.on('shell output', (output) {
-        allLines.add(new ShellLine(LineType.STDOUT, output));
+        showLoadingDialog = false;
+        allLines.add(new ShellLine(LineType.stdout, output));
         scrollToBottom();
       });
 
       socket.on('shell error', (error) {
-        allLines.add(new ShellLine(LineType.STDERR, error));
+        allLines.add(new ShellLine(LineType.stderr, error));
         scrollToBottom();
       });
     });
@@ -77,7 +82,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     } else {
       inputPrompt = '...... ';
     }
-    allLines.add(new ShellLine(LineType.USER_INPUT, shellInput.inputText));
+    allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
     shellInput.inputText = '';
   }
 
@@ -86,11 +91,11 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     shell.scrollTop = shell.scrollHeight;
   }
   @override
-  ngOnDestroy() {
+  void ngOnDestroy() {
     if (socket != null) socket.disconnect();
   }
 
-  gotoDashboard() => _router.navigate(['Dashboard']);
+  void gotoDashboard() => _router.navigate(['Dashboard']);
 
   void logout() {
     _service.logout();

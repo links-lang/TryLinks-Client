@@ -44,4 +44,5 @@
             <iframe *ngIf="port != null" [src]="renderUrl" height="100%" width="100%" onload="return false;" frameborder="0"></iframe>
         </div>
     </div>
+    <loading-screen [showDialog]="showLoadingDialog"></loading-screen>
 </material-content>

@@ -4,6 +4,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:client/tutorial/tutorial_text.dart';
 import 'package:markdown/markdown.dart';
@@ -23,6 +24,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     NgFor,
     NgIf,
     ROUTER_DIRECTIVES,
+    LoadingScreenComponent,
   ],
 )
 class TutorialPageComponent implements OnInit, OnDestroy{
@@ -34,16 +36,15 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   int id;
   CodeMirror editor;
   IO.Socket socket;
+  int port;
+  String compileError = "";
+  bool showLoadingDialog = false;
 
   TutorialPageComponent(this._service, this._router, this._routeParams, this._sanitizer);
 
   List<String> get headers => tutorialHeaders;
 
   SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:$port');
-
-  int port;
-
-  String compileError = "";
 
   Future navToTutorial(int i) async {
     this.id = i;
@@ -54,6 +55,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   }
 
   Future onCompile() async {
+    showLoadingDialog = true;
     print('You want to compile the current Links program with id: ${id}');
     await _service.saveTutorialSource(this.id, this.editor.getDoc().getValue());
     print("saved.");
@@ -78,6 +80,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
 
         socket.on('compiled', (port) {
           print(port);
+          showLoadingDialog = false;
           this.port = port;
         });
 
@@ -100,7 +103,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   }
 
   @override
-  ngOnInit() async {
+  Future ngOnInit() async {
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
     if (this.id == null) this.id = 0;
@@ -126,15 +129,15 @@ class TutorialPageComponent implements OnInit, OnDestroy{
     this.editor.getDoc().setValue(source);
   }
   @override
-  ngOnDestroy() async {
+  Future ngOnDestroy() async {
     port = null;
     if (socket != null) socket.disconnect();
     await _service.updateUser(lastTutorial: this.id);
   }
 
-  gotoInteractive() => _router.navigate(['Interactive']);
+  void gotoInteractive() => _router.navigate(['Interactive']);
 
-  gotoDashboard() => _router.navigate(['Dashboard']);
+  void gotoDashboard() => _router.navigate(['Dashboard']);
 
   void logout() {
     _service.logout();
