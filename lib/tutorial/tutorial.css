@@ -48,7 +48,7 @@ a {
 
 .tl-tutorial-main-col {
   display: grid;
-  grid-template-rows: 600px 1fr;
+  grid-template-rows: 600px 280px;
 }
 
 .tl-compile-btn {
@@ -70,4 +70,8 @@ a {
 
 .tl-nav-item {
   padding: 0;
+}
+
+.tl-tutorial-main-render-error {
+  overflow: auto;
 }

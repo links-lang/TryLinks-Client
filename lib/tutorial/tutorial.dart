@@ -18,7 +18,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     'markdown.css',
     'tutorial.css',
   ],
-  directives: const[
+  directives: const [
     materialDirectives,
     DeferredContentDirective,
     NgFor,
@@ -27,8 +27,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     LoadingScreenComponent,
   ],
 )
-class TutorialPageComponent implements OnInit, OnDestroy{
-
+class TutorialPageComponent implements OnInit, OnDestroy {
   final TryLinksService _service;
   final Router _router;
   final RouteParams _routeParams;
@@ -40,18 +39,23 @@ class TutorialPageComponent implements OnInit, OnDestroy{
   String compileError = "";
   bool showLoadingDialog = false;
 
-  TutorialPageComponent(this._service, this._router, this._routeParams, this._sanitizer);
+  TutorialPageComponent(
+      this._service, this._router, this._routeParams, this._sanitizer);
 
   List<String> get headers => tutorialHeaders;
 
-  SafeResourceUrl get renderUrl => _sanitizer.bypassSecurityTrustResourceUrl('http://localhost:$port');
+  SafeResourceUrl get renderUrl => _sanitizer
+      .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
 
   Future navToTutorial(int i) async {
     this.id = i;
     port = null;
     if (socket != null) socket.disconnect();
     await _service.updateUser(lastTutorial: i);
-    _router.navigate(['Tutorial', {"id": i.toString()}]);
+    _router.navigate([
+      'Tutorial',
+      {"id": i.toString()}
+    ]);
   }
 
   Future onCompile() async {
@@ -72,7 +76,7 @@ class TutorialPageComponent implements OnInit, OnDestroy{
       print('Using existing connection.');
       socket.emit('compile');
     } else {
-      String namespace = 'http://localhost:5000' + socketPath;
+      String namespace = TryLinksService.serverAddr + socketPath;
       print('connecting to $namespace');
       socket = IO.io(namespace);
       socket.on('connect', (_) {
@@ -111,23 +115,24 @@ class TutorialPageComponent implements OnInit, OnDestroy{
         .setInnerHtml(markdownToHtml(tutorialDescs[this.id]));
 
     Map options = {
-      'mode':  'links',
+      'mode': 'links',
       'theme': 'material',
       'lineNumbers': true,
       'autofocus': true,
       'lineWrapping': true,
       'indentWithTabs': true,
-
     };
 
     this.editor = new CodeMirror.fromTextArea(
-        querySelector('textarea.tl-tutorial-main-editor'), options: options);
+        querySelector('textarea.tl-tutorial-main-editor'),
+        options: options);
     this.editor.setSize('100%', '100%');
 
     String source = await _service.getTutorialSource(this.id);
     if (source == null) _router.navigate(['Welcome']);
     this.editor.getDoc().setValue(source);
   }
+
   @override
   Future ngOnDestroy() async {
     port = null;

@@ -52,11 +52,15 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
       return;
     }
 
-    String namespace = 'http://localhost:5000' + socketPath;
+    String namespace = TryLinksService.serverAddr + socketPath;
     print('connecting to $namespace');
     socket = IO.io(namespace);
+    socket.on('server', (_) => print('handshake'));
+
+    socket.on('connect_error', (error) => print(error.toString()));
     socket.on('connect', (_) {
       print('connected to $namespace');
+
       socket.on('shell output', (output) {
         showLoadingDialog = false;
         allLines.add(new ShellLine(LineType.stdout, output));
@@ -97,8 +101,8 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
 
   void gotoDashboard() => _router.navigate(['Dashboard']);
 
-  void logout() {
-    _service.logout();
+  Future logout() async {
+    await _service.logout();
     _router.navigate(['Welcome']);
   }
 }

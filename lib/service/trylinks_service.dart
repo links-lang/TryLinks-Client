@@ -9,24 +9,27 @@ import 'package:http/browser_client.dart';
 class TryLinksService {
   final BrowserClient _http;
   static final _headers = {'Content-Type': 'application/json'};
-  static final String _signupUrl = 'http://localhost:5000/api/user/signup';
-  static final String _loginUrl = 'http://localhost:5000/api/user/login';
-  static final String _updateUserUrl = 'http://localhost:5000/api/user/update';
-  static final String _interactiveUrl =
-      'http://localhost:5000/api/initInteractive';
-  static final String _compileUrl = 'http://localhost:5000/api/compile';
-  static final String _fileReadUrl = 'http://localhost:5000/api/file/read';
-  static final String _fileWriteUrl = 'http://localhost:5000/api/file/write';
+  static final serverURL =
+      const String.fromEnvironment('Service', defaultValue: 'http://localhost');
+  static final serverAddr = serverURL + ':5000';
+  static final String _signupUrl = serverAddr + '/api/user/signup';
+  static final String _loginUrl = serverAddr + '/api/user/login';
+  static final String _updateUserUrl = serverAddr + '/api/user/update';
+  static final String _interactiveUrl = serverAddr + '/api/initInteractive';
+  static final String _compileUrl = serverAddr + '/api/compile';
+  static final String _fileReadUrl = serverAddr + '/api/file/read';
+  static final String _fileWriteUrl = serverAddr + '/api/file/write';
+  static final String _logoutUrl = serverAddr + '/api/logout';
 
   TryLinksService(this._http);
 
   String getUsername() => window.localStorage.containsKey('username')
       ? window.localStorage['username']
-      : 'user';
+      : null;
 
   String getLastTutorial() => window.localStorage.containsKey('last_tutorial')
       ? window.localStorage['last_tutorial']
-      : '0';
+      : null;
 
   Future<bool> signup(String username, String email, String password) async {
     try {
@@ -120,7 +123,7 @@ class TryLinksService {
         var result = JSON.decode(response.body);
         return result["fileData"];
       } else {
-        return "";
+        return null;
       }
     } catch (e) {
       print("File Read API failed");
@@ -145,8 +148,16 @@ class TryLinksService {
     }
   }
 
-  void logout() {
+  Future<bool> logout() async {
     window.localStorage.remove('username');
     window.localStorage.remove('last_tutorial');
+    try {
+      await _http.get(_logoutUrl, headers: _headers);
+      return true;
+    } catch (e) {
+      print("Logout API failed with the following detail:\n");
+      print(e.toString());
+      return null;
+    }
   }
 }
