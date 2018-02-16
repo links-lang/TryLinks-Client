@@ -76,6 +76,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
     currentCmd += "\n" + shellInput.inputText;
     if (shellInput.inputText == 'skip intro;') {
       allLines.add(new ShellLine(LineType.stdout, "Syntax introduction series disabled. To enable, please refresh the page."));
+      introIndex = starterTutorialDesc.length;
     } else {
       if (shellInput.inputText.endsWith(";")) {
         print('sending to socket: $currentCmd');
