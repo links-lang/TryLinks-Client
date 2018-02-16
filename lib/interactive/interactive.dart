@@ -5,6 +5,7 @@ import 'package:angular_components/angular_components.dart';
 
 import 'package:angular_router/angular_router.dart';
 import 'package:client/interactive/shell_line.dart';
+import 'package:client/interactive/starter.dart';
 import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -21,23 +22,17 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
     LoadingScreenComponent,
   ],
 )
-class InteractiveShellPageComponent implements OnInit, OnDestroy{
-
+class InteractiveShellPageComponent implements OnInit, OnDestroy {
   @ViewChild('shellInput')
   MaterialInputComponent shellInput;
-
   List<ShellLine> allLines = [];
-
   String currentCmd = '';
-
   IO.Socket socket;
-
-  String inputPrompt = 'links> ';
-
+  String inputPrompt = ' links> ';
   bool showLoadingDialog = false;
-
   TryLinksService _service;
   Router _router;
+  int introIndex;
 
   InteractiveShellPageComponent(this._router, this._service);
 
@@ -60,10 +55,11 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     socket.on('connect_error', (error) => print(error.toString()));
     socket.on('connect', (_) {
       print('connected to $namespace');
-
+      introIndex = 0;
       socket.on('shell output', (output) {
         showLoadingDialog = false;
         allLines.add(new ShellLine(LineType.stdout, output));
+        _showNewIntro();
         scrollToBottom();
       });
 
@@ -78,15 +74,19 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     scrollToBottom();
 
     currentCmd += "\n" + shellInput.inputText;
-    if (shellInput.inputText.endsWith(";")) {
-      print('sending to socket: $currentCmd');
-      socket.emit('new command', currentCmd);
-      inputPrompt = 'links >';
-      currentCmd = '';
+    if (shellInput.inputText == 'skip intro;') {
+      allLines.add(new ShellLine(LineType.stdout, "Syntax introduction series disabled. To enable, please refresh the page."));
     } else {
-      inputPrompt = '...... ';
+      if (shellInput.inputText.endsWith(";")) {
+        print('sending to socket: $currentCmd');
+        socket.emit('new command', currentCmd);
+        inputPrompt = 'links >';
+        currentCmd = '';
+      } else {
+        inputPrompt = '...... ';
+      }
+      allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
     }
-    allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
     shellInput.inputText = '';
   }
 
@@ -94,6 +94,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
     Element shell = querySelector(".tl-interactive-shell");
     shell.scrollTop = shell.scrollHeight;
   }
+
   @override
   void ngOnDestroy() {
     if (socket != null) socket.disconnect();
@@ -104,5 +105,12 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy{
   Future logout() async {
     await _service.logout();
     _router.navigate(['Welcome']);
+  }
+
+  void _showNewIntro() {
+    if (introIndex < starterTutorialDesc.length) {
+      allLines.add(new ShellLine(LineType.intro, starterTutorialDesc[introIndex]));
+      introIndex++;
+    }
   }
 }

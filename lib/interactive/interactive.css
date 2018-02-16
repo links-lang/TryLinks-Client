@@ -9,6 +9,7 @@
     display: grid;
     grid-template-rows: 10% 90%;
     padding: 5% 10%;
+    overflow-y: auto;
 }
 
 .tl-interactive-shell {
@@ -35,4 +36,5 @@
     padding-left: 8px;
     width: 95%;
     background-color: transparent;
+    font-family: monospace;
 }

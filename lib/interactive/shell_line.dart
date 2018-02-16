@@ -14,6 +14,8 @@ class ShellLineComponent {
 
   String getColor() {
     switch (line.type) {
+      case LineType.intro:
+        return 'grey';
       case LineType.userInput:
         return 'white';
       case LineType.stdout:
@@ -27,6 +29,7 @@ class ShellLineComponent {
 }
 
 enum LineType {
+  intro,
   userInput,
   stdout,
   stderr,
