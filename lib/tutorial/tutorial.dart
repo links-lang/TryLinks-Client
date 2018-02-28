@@ -126,7 +126,7 @@ class TutorialPageComponent implements OnInit, OnDestroy {
     this.editor = new CodeMirror.fromTextArea(
         querySelector('textarea.tl-tutorial-main-editor'),
         options: options);
-    this.editor.setSize('100%', '100%');
+    this.editor.setSize('100%', '75vh');
 
     String source = await _service.getTutorialSource(this.id);
     if (source == null) _router.navigate(['Welcome']);

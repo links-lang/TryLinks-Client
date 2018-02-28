@@ -11,6 +11,10 @@ const tutorialDescs = const [
   r'''
 ## Lesson 1 Hello World
   
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a web page that says "Hello World!".
+
 Let's start with the simplest possible program: one that just prints "Hello, world" (albeit on a Web page). The starter code will not work right away, but you can fix it real quick!
 
 This is a tiny bit more complicated than you might expect. Let's go through the main components of the program:
@@ -36,6 +40,10 @@ If you don't see the page and got some errors, double check you have your tags p
 ''',
   r'''
 ## Lesson 2: Simple Forms
+
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a web form that takes a string and an integer. When the form submits you should be able to see the values you inputted.
 
 This tutorial illustrates how to create a form in Links and how to handle form submission. There are several ways to do this in Links:
 
@@ -70,6 +78,10 @@ The `handleForm` function simply constructs a new page that shows the submitted 
   r'''
 ## Lesson 3: Client side forms
 
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a web form that takes a string and an integer. When the form submits you should be able to see the values you inputted.
+
 This example illustrates the second way to submit forms in Links. The form defined in the `mainPage` function is similar to the form in the previous lesson, but with one difference: the `l:onsubmit` attribute is used instead of `l:action`.
 
 The difference between the two attributes is as follows:
@@ -91,6 +103,10 @@ Here, the Links code called when the form is submitted is a new new `handleForm`
   ''',
   r'''
 ## Lesson 4: Client side TODO list
+
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a non-persistent TODO list.
 
 This program creates an interactive, client-side TODO list. It works on the same principle as the previous one: values are submitted using a form, and the form response is an action performed on the client side (using `l:onsubmit`).
 
@@ -121,6 +137,10 @@ for (x <- [1,2,3]) where (x == 2) [x+10]
   ''',
   r'''
 ## Lesson 5: Factorial: Querying tables
+
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a page where you can query the factorial numbers from 1 to 20.
 
 ### Overview
 
@@ -178,6 +198,10 @@ The other new thing in this example is the annotations `client` and `server` in 
 ''',
   r'''
 ## Lesson 6: Database TODO list: Updating tables
+
+#### You can navigate to other tutorials by click the menu icon on the upper left corner.
+
+### Goal: make a persistent TODO list.
 
 ### Overview
 

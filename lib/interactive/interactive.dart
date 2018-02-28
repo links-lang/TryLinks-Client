@@ -57,9 +57,9 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
       print('connected to $namespace');
       introIndex = 0;
       socket.on('shell output', (output) {
+        if (showLoadingDialog) _showNewIntro();
         showLoadingDialog = false;
         allLines.add(new ShellLine(LineType.stdout, output));
-        _showNewIntro();
         scrollToBottom();
       });
 
@@ -72,22 +72,34 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
 
   void onInputChange() {
     scrollToBottom();
+    print(shellInput.focused);
+    if (!shellInput.focused) return;
 
     currentCmd += "\n" + shellInput.inputText;
-    if (shellInput.inputText == 'skip intro;') {
-      allLines.add(new ShellLine(LineType.stdout, "Syntax introduction series disabled. To enable, please refresh the page."));
+    if (currentCmd.trim() ==  'skip intro;') {
+      allLines.add(new ShellLine(LineType.stdout,
+          "Syntax introduction series disabled. To enable, please refresh the page."));
       introIndex = starterTutorialDesc.length;
       currentCmd = '';
+    } else if (currentCmd.trim() == 'next tip;') {
+      _showNewIntro();
+      currentCmd = '';
+    } else if (currentCmd.trim() == 'go back;') {
+      introIndex = introIndex > 1 ? introIndex - 2 : 0;
+      _showNewIntro();
+      currentCmd = '';
     } else {
+      allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
       if (shellInput.inputText.endsWith(";")) {
-        print('sending to socket: $currentCmd');
-        socket.emit('new command', currentCmd);
+        for (String cmd in currentCmd.split(";")) {
+          print('sending to socket: $cmd;');
+          socket.emit('new command', cmd + ";");
+        }
         inputPrompt = 'links >';
         currentCmd = '';
       } else {
         inputPrompt = '...... ';
       }
-      allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
     }
     shellInput.inputText = '';
   }
@@ -111,7 +123,8 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
 
   void _showNewIntro() {
     if (introIndex < starterTutorialDesc.length) {
-      allLines.add(new ShellLine(LineType.intro, starterTutorialDesc[introIndex]));
+      allLines
+          .add(new ShellLine(LineType.intro, starterTutorialDesc[introIndex]));
       introIndex++;
     }
   }

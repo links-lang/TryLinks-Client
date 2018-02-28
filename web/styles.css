@@ -17,3 +17,6 @@ body {
     color: white;
 }
 
+.tl-repl-code-snippet {
+    color: green;
+}
