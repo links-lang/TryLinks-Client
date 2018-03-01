@@ -13,6 +13,7 @@
                     [(ngModel)]="password"
                     (inputKeyPress)="errorMsg = '';"
                     label="Password"
+                    (keyup.enter)="onLogin()"
                     type="password">
     </material-input>
     <material-button raised (trigger)="onLogin()">Log in</material-button>

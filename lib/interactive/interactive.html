@@ -15,7 +15,7 @@
         <material-input #shellInput
                         class="tl-interactive-input"
                         leadingText="{{inputPrompt}}"
-                        (change)="onInputChange()"
+                        (keyup.enter)="onInputChange()"
                         type="text">
         </material-input>
     </div>
