@@ -37,6 +37,10 @@ If you don't see the page and got some errors, double check you have your tags p
 
 3. If you are familiar with CSS or JavaScript, what happens if you include a `<style>` or `<script>` tag in the page content?
 
+#### You can find the solution to this tutorial here 
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-1%3A-Hello%2C-world%21
+
 ''',
   r'''
 ## Lesson 2: Simple Forms
@@ -74,6 +78,11 @@ The `handleForm` function simply constructs a new page that shows the submitted 
 4. What happens if you return something other than a page from the `l:action` attribute value? For example, change to `{(s,i)}`?
 
 5. Experiment with including other standard HTML form elements such as `textarea`, `radio`, `checkbox`.
+
+#### You can find the solution to this tutorial here
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-2:-Simple-forms
+
   ''',
   r'''
 ## Lesson 3: Client side forms
@@ -99,6 +108,10 @@ Here, the Links code called when the form is submitted is a new new `handleForm`
 1. What happens if you change `l:onsubmit` to `l:action`?
 
 2. Modify the code to behave appropriately (e.g. showing an error message instead of the form results) if the value of the integer field is not a valid number. (Hint: Links supports regular expression matching e.g. `str =~ /a*b*/` tests whether a string `str` is a sequence of zero or more `a`s followed by zero or more `b`s).
+
+#### You can find the solution to this tutorial here
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-3:-Client-side-forms
 
   ''',
   r'''
@@ -134,6 +147,9 @@ Finally, the `remove` function traverses the todo list and removes the item(s) w
 for (x <- [1,2,3]) where (x == 2) [x+10]
 ~~~
 
+#### You can find the solution to this tutorial here
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-4:-Client-side-TODO-list
   ''',
   r'''
 ## Lesson 5: Factorial: Querying tables
@@ -195,6 +211,10 @@ The other new thing in this example is the annotations `client` and `server` in 
 
  3. What happens if you submit a string such as `5xyz` that starts with a number but includes non-digits? How might you change this behavior to rule this out?
 
+#### You can find the solution to this tutorial here
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-5:-Factorial:-Querying-tables
+
 ''',
   r'''
 ## Lesson 6: Database TODO list: Updating tables
@@ -247,6 +267,10 @@ renames an item from `oldname` to `newname`.
  3. Using `update`, modify `todo_db.links` to allow renaming an existing item.
 
  4. This version of the TODO list uses `l:action` to handle the form responses by POSTing to the server. Some server communication is unavoidable because we need to get data from teh database, or update the database, but it should be possible to rewrite this program to use `l:onsubmit` to avoid completely rebuilding the page whenever the a button is clicked, using a similar approach to the client-side form in lessons 3 or 5. Modify `todo_db.links` to work this way.
+
+#### You can find the solution to this tutorial here
+
+https://github.com/links-lang/links-tutorial/wiki/Lesson-6:-Database-TODO-list:-Updating-tables
 
 ''',
 ];
