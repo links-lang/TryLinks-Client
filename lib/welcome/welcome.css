@@ -32,7 +32,12 @@
 }
 
 .tl-description-text {
-    margin: 20%;
+    margin-left: 20px;
+}
+
+.tl-demo-gif {
+    max-height: 200px;
+    padding: 8px;
 }
 
 .ti-actions {
