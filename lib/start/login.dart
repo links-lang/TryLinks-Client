@@ -5,17 +5,13 @@ import 'package:angular_router/angular_router.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:validator/validator.dart';
 
-@Component(
-    selector: 'login-tab',
-    templateUrl: 'login.html',
-    styleUrls: const ['login.css'],
-    directives: const [
-      materialDirectives,
-      NgModel,
-    ]
-)
+@Component(selector: 'login-tab', templateUrl: 'login.html', styleUrls: const [
+  'login.css'
+], directives: const [
+  materialDirectives,
+  NgModel,
+])
 class LoginTabComponent {
-
   String username;
   String password;
   String errorMsg;
@@ -39,5 +35,4 @@ class LoginTabComponent {
       errorMsg = 'Incorrect username or password.';
     }
   }
-
 }

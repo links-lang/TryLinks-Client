@@ -42,19 +42,19 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
     String socketPath = await _service.startInteractiveMode();
 
     if (socketPath == null) {
-      print('logging out.');
+//      print('logging out.');
       _router.navigate(['Welcome']);
       return;
     }
 
     String namespace = TryLinksService.serverAddr + socketPath;
-    print('connecting to $namespace');
+//    print('connecting to $namespace');
     socket = IO.io(namespace);
     socket.on('server', (_) => print('handshake'));
 
     socket.on('connect_error', (error) => print(error.toString()));
     socket.on('connect', (_) {
-      print('connected to $namespace');
+//      print('connected to $namespace');
       introIndex = 0;
       socket.on('shell output', (output) {
         if (showLoadingDialog) _showNewIntro();
@@ -76,7 +76,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
     if (!shellInput.focused) return;
 
     currentCmd += "\n" + shellInput.inputText;
-    if (currentCmd.trim() ==  'skip intro;') {
+    if (currentCmd.trim() == 'skip intro;') {
       allLines.add(new ShellLine(LineType.stdout,
           "Syntax introduction series disabled. To enable, please refresh the page."));
       introIndex = starterTutorialDesc.length;
@@ -92,7 +92,7 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
       allLines.add(new ShellLine(LineType.userInput, shellInput.inputText));
       if (shellInput.inputText.endsWith(";")) {
         for (String cmd in currentCmd.split(";")) {
-          print('sending to socket: $cmd;');
+//          print('sending to socket: $cmd;');
           socket.emit('new command', cmd + ";");
         }
         inputPrompt = 'links >';

@@ -7,7 +7,9 @@ import 'package:validator/validator.dart';
 @Component(
     selector: 'signup-tab',
     templateUrl: 'signup.html',
-    styleUrls: const ['signup.css'],
+    styleUrls: const [
+      'signup.css'
+    ],
     directives: const [
       materialDirectives,
       NgModel,

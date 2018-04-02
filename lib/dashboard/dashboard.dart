@@ -12,7 +12,7 @@ import 'package:client/service/trylinks_service.dart';
     materialDirectives,
   ],
 )
-class DashboardPageComponent implements OnInit{
+class DashboardPageComponent implements OnInit {
   Router _router;
   TryLinksService _service;
   String username;
@@ -24,7 +24,10 @@ class DashboardPageComponent implements OnInit{
   }
 
   void gotoTutorialPage() {
-    _router.navigate(['Tutorial', {"id": _service.getLastTutorial()}]);
+    _router.navigate([
+      'Tutorial',
+      {"id": _service.getLastTutorial()}
+    ]);
   }
 
   Future logout() async {

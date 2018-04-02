@@ -60,27 +60,27 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
   Future onCompile() async {
     showLoadingDialog = true;
-    print('You want to compile the current Links program with id: ${id}');
+//    print('You want to compile the current Links program with id: ${id}');
     await _service.saveTutorialSource(this.id, this.editor.getDoc().getValue());
-    print("saved.");
+//    print("saved.");
 
     String socketPath = await _service.compileAndDeploy();
 
     if (socketPath == null) {
-      print('cannot find a socket path to connect to');
+//      print('cannot find a socket path to connect to');
       return;
     }
 
     compileError = "";
     if (socket != null && socket.connected) {
-      print('Using existing connection.');
+//      print('Using existing connection.');
       socket.emit('compile');
     } else {
       String namespace = TryLinksService.serverAddr + socketPath;
-      print('connecting to $namespace');
+//      print('connecting to $namespace');
       socket = IO.io(namespace);
       socket.on('connect', (_) {
-        print('connected to $namespace');
+//        print('connected to $namespace');
 
         socket.on('compiled', (port) {
           print(port);
@@ -100,7 +100,7 @@ class TutorialPageComponent implements OnInit, OnDestroy {
           this.port = null;
         });
 
-        print('emtting compile message');
+//        print('emtting compile message');
         socket.emit('compile');
       });
     }

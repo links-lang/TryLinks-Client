@@ -27,14 +27,9 @@ import 'package:client/welcome/welcome.dart';
       name: 'Welcome',
       component: WelcomePageComponent,
       useAsDefault: true),
+  const Route(path: '/start', name: 'Start', component: StartPageComponent),
   const Route(
-      path: '/start',
-      name: 'Start',
-      component: StartPageComponent),
-  const Route(
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: DashboardPageComponent),
+      path: '/dashboard', name: 'Dashboard', component: DashboardPageComponent),
   const Route(
       path: '/interactive',
       name: 'Interactive',
@@ -44,5 +39,4 @@ import 'package:client/welcome/welcome.dart';
       name: 'Tutorial',
       component: TutorialPageComponent),
 ])
-class AppComponent {
-}
+class AppComponent {}
