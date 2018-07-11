@@ -38,14 +38,15 @@ class TutorialPageComponent implements OnInit, OnDestroy {
   int port;
   String compileError = "";
   bool showLoadingDialog = false;
+  SafeResourceUrl renderUrl;
 
   TutorialPageComponent(
       this._service, this._router, this._routeParams, this._sanitizer);
 
   List<String> get headers => tutorialHeaders;
 
-  SafeResourceUrl get renderUrl => _sanitizer
-      .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
+//  SafeResourceUrl get renderUrl => _sanitizer
+//      .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
 
   Future navToTutorial(int i) async {
     this.id = i;
@@ -86,6 +87,8 @@ class TutorialPageComponent implements OnInit, OnDestroy {
           print(port);
           showLoadingDialog = false;
           this.port = port;
+          renderUrl = _sanitizer
+              .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
         });
 
         socket.on('compile error', (error) {

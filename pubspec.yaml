@@ -12,8 +12,7 @@ dependencies:
   angular_components: ^0.8.0
   angular_router: ^1.0.2
   validator: ">=0.0.4 <0.1.0"
-  socket_io:
-      git: https://github.com/rikulo/socket.io-dart.git
+  socket_io: any
   socket_io_client:
       git: https://github.com/rikulo/socket.io-client-dart.git
   markdown: "^1.1.1"
