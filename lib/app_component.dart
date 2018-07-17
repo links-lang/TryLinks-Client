@@ -6,6 +6,7 @@ import 'package:client/interactive/interactive.dart';
 import 'package:client/start/start.dart';
 import 'package:client/tutorial/tutorial.dart';
 import 'package:client/welcome/welcome.dart';
+import 'package:client/admin/admin.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -38,5 +39,6 @@ import 'package:client/welcome/welcome.dart';
       path: '/tutorial/:id',
       name: 'Tutorial',
       component: TutorialPageComponent),
+  const Route(path: '/admin', name: 'Admin', component: AdminPageComponent),
 ])
 class AppComponent {}

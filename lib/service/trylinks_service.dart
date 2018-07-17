@@ -21,6 +21,9 @@ class TryLinksService {
   static final String _fileWriteUrl = serverAddr + '/api/file/write';
   static final String _logoutUrl = serverAddr + '/api/logout';
 
+  static final String _tutorialUrl = serverAddr + '/api/tutorial/';
+  static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
+
   TryLinksService(this._http);
 
   String getUsername() => window.localStorage.containsKey('username')
@@ -156,6 +159,46 @@ class TryLinksService {
       return true;
     } catch (e) {
       print("Logout API failed with the following detail:\n");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<String> getTutorialDesc(int id) async {
+    try {
+      final response = await _http.post(_tutorialUrl,
+          headers: _headers, body: JSON.encode({'tutorialId': id}));
+      if (response.statusCode == 200) {
+        var result = JSON.decode(response.body);
+        return result["description"];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Tutorial Read API failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<int> createTutorial(String title, String desc, String source) async {
+    try {
+      final response = await _http.post(_newTutorialUrl,
+          headers: _headers,
+          body: JSON.encode({
+            'title': title,
+            'description': desc,
+            'source': source
+          }));
+      if (response.statusCode == 200) {
+        var result = JSON.decode(response.body);
+        return result["tutorialId"];
+      } else {
+        return null;
+      }
+
+    } catch (e) {
+      print("Tutorial Create API failed");
       print(e.toString());
       return null;
     }

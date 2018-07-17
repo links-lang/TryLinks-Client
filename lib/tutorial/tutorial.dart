@@ -114,8 +114,12 @@ class TutorialPageComponent implements OnInit, OnDestroy {
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
     if (this.id == null) this.id = 0;
+    String description = await _service.getTutorialDesc(this.id);
+    if (description == null) {
+      description = "The tutorial's description could not be retrieved.";
+    }
     querySelector('div.tl-tutorial-main-desc')
-        .setInnerHtml(markdownToHtml(tutorialDescs[this.id]));
+        .setInnerHtml(markdownToHtml(description));
 
     Map options = {
       'mode': 'links',
