@@ -3,7 +3,7 @@
         <div group>
             <div label>Tutorials</div>
             <material-list-item *ngFor="let header of headers; let i=index" class="tl-nav-item">
-                <material-button (trigger)="navToTutorial(i)" class="tl-tutorial-header">{{header}}</material-button>
+                <material-button (trigger)="navToTutorial(header['tutorial_id'])" class="tl-tutorial-header">{{i+1}}. {{header['title']}}</material-button>
             </material-list-item>
         </div>
     </material-list>

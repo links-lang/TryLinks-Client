@@ -69,3 +69,9 @@ material-dialog {
     color: black;
     font-family:  Helvetica, Arial, sans-serif;
 }
+
+.CodeMirror {
+    height: auto;
+    overflow-y: hidden;
+    overflow-x: auto;
+}

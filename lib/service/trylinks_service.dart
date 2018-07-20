@@ -21,8 +21,9 @@ class TryLinksService {
   static final String _fileWriteUrl = serverAddr + '/api/file/write';
   static final String _logoutUrl = serverAddr + '/api/logout';
 
-  static final String _tutorialUrl = serverAddr + '/api/tutorial/';
+  static final String _tutorialUrl = serverAddr + '/api/tutorial/description';
   static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
+  static final String _tutorialHeadersUrl = serverAddr + '/api/tutorial/headers';
 
   TryLinksService(this._http);
 
@@ -181,7 +182,7 @@ class TryLinksService {
     }
   }
 
-  Future<int> createTutorial(String title, String desc, String source) async {
+  Future<bool> createTutorial(String title, String desc, String source) async {
     try {
       final response = await _http.post(_newTutorialUrl,
           headers: _headers,
@@ -191,14 +192,26 @@ class TryLinksService {
             'source': source
           }));
       if (response.statusCode == 200) {
-        var result = JSON.decode(response.body);
-        return result["tutorialId"];
+        return true;
       } else {
         return null;
       }
 
     } catch (e) {
       print("Tutorial Create API failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<List> getTutorialHeaders() async {
+    try {
+      final response = await _http.get(_tutorialHeadersUrl, headers: _headers);
+      if (response.statusCode != 200) return null;
+      var result = JSON.decode(response.body);
+      return result["headers"];
+    } catch (e) {
+      print("Retrieval of tutorials' titles failed");
       print(e.toString());
       return null;
     }

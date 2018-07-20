@@ -63,10 +63,9 @@ class AdminPageComponent implements OnInit {
     final result = await _service.createTutorial(
         title, this.descEditor.getDoc().getValue(), this.sourceEditor.getDoc().getValue());
 
-    if (result == null) {
+    if (result != true) {
       print('Failed to create a new tutorial');
     } else {
-      print('Created a tutorial:  $result');
       this.title = null;
       this.descEditor.getDoc().setValue('');
       this.sourceEditor.getDoc().setValue('');
