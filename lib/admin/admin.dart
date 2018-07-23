@@ -31,6 +31,10 @@ class AdminPageComponent implements OnInit {
 
   @override
   Future ngOnInit() async {
+    if (!_service.isAdmin()) {
+      _router.navigate(['Dashboard']);
+    }
+
     success = null;
 
     Map descOptions = {
@@ -64,8 +68,10 @@ class AdminPageComponent implements OnInit {
         title, this.descEditor.getDoc().getValue(), this.sourceEditor.getDoc().getValue());
 
     if (result != true) {
+      this.success = false;
       print('Failed to create a new tutorial');
     } else {
+      this.success = true;
       this.title = null;
       this.descEditor.getDoc().setValue('');
       this.sourceEditor.getDoc().setValue('');

@@ -200,6 +200,7 @@ class TryLinksService {
       if (response.statusCode == 200) {
         return true;
       } else {
+        print((JSON.decode(response.body))["message"]);
         return null;
       }
 

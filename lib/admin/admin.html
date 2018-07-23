@@ -51,4 +51,26 @@
         </material-dialog>
     </modal>
 
+    <modal [visible]="success == true"
+           (dismiss)="success = null">
+        <material-dialog>
+            <div header><h3>Success!</h3></div>
+            <p>Tutorial has been successfully created.</p>
+            <div footer>
+                <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
+    <modal [visible]="success == false"
+           (dismiss)="success = null">
+        <material-dialog>
+            <div header><h3>Something went wrong!</h3></div>
+            <p>Unfortunately, tutorial could not be created.</p>
+            <div footer>
+                <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
 </material-content>
