@@ -35,6 +35,10 @@ class TryLinksService {
       ? window.localStorage['last_tutorial']
       : null;
 
+  bool isAdmin() => window.localStorage.containsKey('is_admin')
+      ? window.localStorage['is_admin'].toLowerCase() == 'true'
+      : false;
+
   Future<bool> signup(String username, String email, String password) async {
     try {
       final response = await _http.post(_signupUrl,
@@ -64,6 +68,7 @@ class TryLinksService {
         var result = JSON.decode(response.body);
         window.localStorage['username'] = username;
         window.localStorage['last_tutorial'] = result["data"]["last_tutorial"];
+        window.localStorage['is_admin'] = result["data"]["is_admin"];
       }
       return response.statusCode == 200;
     } catch (e) {
@@ -155,6 +160,7 @@ class TryLinksService {
   Future<bool> logout() async {
     window.localStorage.remove('username');
     window.localStorage.remove('last_tutorial');
+    window.localStorage.remove('is_admin');
     try {
       await _http.get(_logoutUrl, headers: _headers);
       return true;

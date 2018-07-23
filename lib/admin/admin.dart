@@ -81,4 +81,11 @@ class AdminPageComponent implements OnInit {
           this.sourceEditor.getDoc().getValue() != '';
   }
 
+  void gotoDashboard() => _router.navigate(['Dashboard']);
+
+  Future logout() async {
+    await _service.logout();
+    _router.navigate(['Welcome']);
+  }
+
 }

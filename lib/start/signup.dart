@@ -45,7 +45,7 @@ class SignupTabComponent {
     }
 
     // Validate email
-    if (!isEmail(email)) {
+    if (email != null && !isEmail(email)) {
       emailErrorMsg = "Invalid email address";
       valid = false;
     }
