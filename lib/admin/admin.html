@@ -15,16 +15,11 @@
         </material-input>
     </div>
     <div class="new-tutorial-content">
-        <div>
-            <textarea class="new-tutorial-desc CodeMirror-scroll"
-                      placeholder="Description of the tutorial goes here. Use the Markdown syntax."></textarea>
-        </div>
-
-        <div>
-            <textarea class="new-tutorial-editor CodeMirror-scroll"
+        <textarea class="new-tutorial-desc CodeMirror-scroll"
+                  placeholder="Description of the tutorial goes here. Use the Markdown syntax."></textarea>
+        <textarea class="new-tutorial-editor CodeMirror-scroll"
                       placeholder="The initial code the user is given goes here"></textarea>
-        </div>
-    </div>t
+    </div>
     <div class="submit-new-tutorial-box">
         <material-button class="create-btn" raised (trigger)="openModal()">
             Create a tutorial

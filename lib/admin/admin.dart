@@ -51,12 +51,12 @@ class AdminPageComponent implements OnInit {
     this.descEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.new-tutorial-desc'),
         options: descOptions);
-    this.descEditor.setSize('100%', '100%');
+    this.descEditor.setSize('100%', '80vh');
 
     this.sourceEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.new-tutorial-editor'),
         options: sourceOptions);
-    this.sourceEditor.setSize('100%', '100%');
+    this.sourceEditor.setSize('100%', '80vh');
   }
 
   Future onCreateTutorial() async {
