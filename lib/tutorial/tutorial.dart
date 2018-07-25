@@ -137,7 +137,11 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
     String source = await _service.getTutorialSource(this.id);
     if (source == null) {
-      _router.navigate(['Dashboard']);
+      if (this.id != 1) {
+        _router.navigate([ 'Tutorial', {"id": 1.toString()}]);
+      } else {
+        _router.navigate(['Dashboard']);
+      }
     } else {
       this.editor.getDoc().setValue(source);
       await _service.updateUser(lastTutorial: this.id);
