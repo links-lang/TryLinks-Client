@@ -112,7 +112,6 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
-//    if (this.id == null) this.id = 1;
     String description = await _service.getTutorialDesc(this.id);
     if (description == null) {
       this.id = await _service.getDefaultTutorialId();
