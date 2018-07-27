@@ -24,7 +24,7 @@
     background-color: white;
     color: black;
     margin: 0 10%;
-    height: 80vh;
+    height: 77vh;
 }
 
 .title-input, .submit-new-tutorial-box {
@@ -74,4 +74,39 @@ material-dialog {
     height: auto;
     overflow-y: hidden;
     overflow-x: auto;
+}
+
+.new-tutorial-textarea-header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: black;
+    margin: 0 10%;
+}
+
+.new-tutorial-textarea-header div {
+    text-align: center;
+    padding: 5px 0;
+}
+
+.textarea-header-desc {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.textarea-header-source {
+    background-color: #263238;
+    color: rgba(233, 237, 237, 0.54);
+}
+
+.textarea-header-desc div, .textarea-header-source div {
+    width: 80%;
+    margin: auto
+}
+
+.textarea-header-desc div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.54);
+}
+
+.textarea-header-source div {
+    border-bottom: 1px solid rgba(233, 237, 237, 0.54);
 }

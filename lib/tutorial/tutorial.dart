@@ -6,7 +6,6 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
-import 'package:client/tutorial/tutorial_text.dart';
 import 'package:markdown/markdown.dart';
 import 'package:codemirror/codemirror.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
