@@ -31,6 +31,10 @@ class AdminPageComponent implements OnInit {
 
   @override
   Future ngOnInit() async {
+    if (!_service.isAdmin()) {
+      _router.navigate(['Dashboard']);
+    }
+
     success = null;
 
     Map descOptions = {
@@ -51,12 +55,12 @@ class AdminPageComponent implements OnInit {
     this.descEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.new-tutorial-desc'),
         options: descOptions);
-    this.descEditor.setSize('100%', '100%');
+    this.descEditor.setSize('100%', '77vh');
 
     this.sourceEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.new-tutorial-editor'),
         options: sourceOptions);
-    this.sourceEditor.setSize('100%', '100%');
+    this.sourceEditor.setSize('100%', '77vh');
   }
 
   Future onCreateTutorial() async {
@@ -64,8 +68,10 @@ class AdminPageComponent implements OnInit {
         title, this.descEditor.getDoc().getValue(), this.sourceEditor.getDoc().getValue());
 
     if (result != true) {
+      this.success = false;
       print('Failed to create a new tutorial');
     } else {
+      this.success = true;
       this.title = null;
       this.descEditor.getDoc().setValue('');
       this.sourceEditor.getDoc().setValue('');
@@ -79,6 +85,13 @@ class AdminPageComponent implements OnInit {
           this.descEditor.getDoc().getValue() != '' &&
           this.sourceEditor.getDoc().getValue() != null &&
           this.sourceEditor.getDoc().getValue() != '';
+  }
+
+  void gotoDashboard() => _router.navigate(['Dashboard']);
+
+  Future logout() async {
+    await _service.logout();
+    _router.navigate(['Welcome']);
   }
 
 }
