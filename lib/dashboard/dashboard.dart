@@ -10,12 +10,14 @@ import 'package:client/service/trylinks_service.dart';
   styleUrls: const ['dashboard.css'],
   directives: const [
     materialDirectives,
+    NgIf
   ],
 )
 class DashboardPageComponent implements OnInit {
   Router _router;
   TryLinksService _service;
   String username;
+  bool isAdmin;
 
   DashboardPageComponent(this._router, this._service);
 
@@ -30,6 +32,10 @@ class DashboardPageComponent implements OnInit {
     ]);
   }
 
+  void gotoAdmin() {
+    _router.navigate(['Admin']);
+  }
+
   Future logout() async {
     await _service.logout();
     _router.navigate(['Welcome']);
@@ -42,5 +48,6 @@ class DashboardPageComponent implements OnInit {
       username = 'user';
       _router.navigate(['Welcome']);
     }
+    this.isAdmin = _service.isAdmin();
   }
 }

@@ -6,7 +6,6 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:client/loading/loading.dart';
 import 'package:client/service/trylinks_service.dart';
-import 'package:client/tutorial/tutorial_text.dart';
 import 'package:markdown/markdown.dart';
 import 'package:codemirror/codemirror.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -38,20 +37,19 @@ class TutorialPageComponent implements OnInit, OnDestroy {
   int port;
   String compileError = "";
   bool showLoadingDialog = false;
+  SafeResourceUrl renderUrl;
+  List headers;
 
   TutorialPageComponent(
       this._service, this._router, this._routeParams, this._sanitizer);
 
-  List<String> get headers => tutorialHeaders;
-
-  SafeResourceUrl get renderUrl => _sanitizer
-      .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
+//  SafeResourceUrl get renderUrl => _sanitizer
+//      .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
 
   Future navToTutorial(int i) async {
     this.id = i;
     port = null;
     if (socket != null) socket.disconnect();
-    await _service.updateUser(lastTutorial: i);
     _router.navigate([
       'Tutorial',
       {"id": i.toString()}
@@ -86,6 +84,8 @@ class TutorialPageComponent implements OnInit, OnDestroy {
           print(port);
           showLoadingDialog = false;
           this.port = port;
+          renderUrl = _sanitizer
+              .bypassSecurityTrustResourceUrl(TryLinksService.serverURL + ':$port');
         });
 
         socket.on('compile error', (error) {
@@ -100,7 +100,7 @@ class TutorialPageComponent implements OnInit, OnDestroy {
           this.port = null;
         });
 
-//        print('emtting compile message');
+//        print('emitting compile message');
         socket.emit('compile');
       });
     }
@@ -108,11 +108,17 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
   @override
   Future ngOnInit() async {
+    this.headers = await _service.getTutorialHeaders();
+
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
-    if (this.id == null) this.id = 0;
+    if (this.id == null) this.id = 1;
+    String description = await _service.getTutorialDesc(this.id);
+    if (description == null) {
+      description = "The tutorial's description could not be retrieved.";
+    }
     querySelector('div.tl-tutorial-main-desc')
-        .setInnerHtml(markdownToHtml(tutorialDescs[this.id]));
+        .setInnerHtml(markdownToHtml(description));
 
     Map options = {
       'mode': 'links',
@@ -129,15 +135,22 @@ class TutorialPageComponent implements OnInit, OnDestroy {
     this.editor.setSize('100%', '75vh');
 
     String source = await _service.getTutorialSource(this.id);
-    if (source == null) _router.navigate(['Welcome']);
-    this.editor.getDoc().setValue(source);
+    if (source == null) {
+      if (this.id != 1) {
+        _router.navigate([ 'Tutorial', {"id": 1.toString()}]);
+      } else {
+        _router.navigate(['Dashboard']);
+      }
+    } else {
+      this.editor.getDoc().setValue(source);
+      await _service.updateUser(lastTutorial: this.id);
+    }
   }
 
   @override
   Future ngOnDestroy() async {
     port = null;
     if (socket != null) socket.disconnect();
-    await _service.updateUser(lastTutorial: this.id);
   }
 
   void gotoInteractive() => _router.navigate(['Interactive']);

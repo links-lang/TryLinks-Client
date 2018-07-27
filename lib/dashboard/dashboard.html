@@ -2,6 +2,7 @@
     <img src="img/logo.svg" alt="Links Logo">
 </div>
 <div class="tl-welcome-msg">Hello, {{username}}</div>
+<material-button *ngIf="isAdmin" dense class="tl-admin-button" (trigger)="gotoAdmin()">Modify Tutorials</material-button>
 <material-button dense class="tl-logout-button" (trigger)="logout()">Log out</material-button>
 <div class="tl-dashboard-interactive">
     <h3 class="tl-dashboard-content-header">Interactive Mode</h3>

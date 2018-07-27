@@ -39,7 +39,7 @@ If you don't see the page and got some errors, double check you have your tags p
 
 #### You can find the solution to this tutorial here 
 
-https://github.com/links-lang/links-tutorial/wiki/Lesson-1%3A-Hello%2C-world%21
+<https://github.com/links-lang/links-tutorial/wiki/Lesson-1%3A-Hello%2C-world%21>
 
 ''',
   r'''

@@ -21,6 +21,10 @@ class TryLinksService {
   static final String _fileWriteUrl = serverAddr + '/api/file/write';
   static final String _logoutUrl = serverAddr + '/api/logout';
 
+  static final String _tutorialUrl = serverAddr + '/api/tutorial/description';
+  static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
+  static final String _tutorialHeadersUrl = serverAddr + '/api/tutorial/headers';
+
   TryLinksService(this._http);
 
   String getUsername() => window.localStorage.containsKey('username')
@@ -30,6 +34,10 @@ class TryLinksService {
   String getLastTutorial() => window.localStorage.containsKey('last_tutorial')
       ? window.localStorage['last_tutorial']
       : null;
+
+  bool isAdmin() => window.localStorage.containsKey('is_admin')
+      ? window.localStorage['is_admin'].toLowerCase() == 'true'
+      : false;
 
   Future<bool> signup(String username, String email, String password) async {
     try {
@@ -60,6 +68,7 @@ class TryLinksService {
         var result = JSON.decode(response.body);
         window.localStorage['username'] = username;
         window.localStorage['last_tutorial'] = result["data"]["last_tutorial"];
+        window.localStorage['is_admin'] = result["data"]["is_admin"];
       }
       return response.statusCode == 200;
     } catch (e) {
@@ -151,11 +160,65 @@ class TryLinksService {
   Future<bool> logout() async {
     window.localStorage.remove('username');
     window.localStorage.remove('last_tutorial');
+    window.localStorage.remove('is_admin');
     try {
       await _http.get(_logoutUrl, headers: _headers);
       return true;
     } catch (e) {
       print("Logout API failed with the following detail:\n");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<String> getTutorialDesc(int id) async {
+    try {
+      final response = await _http.post(_tutorialUrl,
+          headers: _headers, body: JSON.encode({'tutorialId': id}));
+      if (response.statusCode == 200) {
+        var result = JSON.decode(response.body);
+        return result["description"];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Tutorial Read API failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<bool> createTutorial(String title, String desc, String source) async {
+    try {
+      final response = await _http.post(_newTutorialUrl,
+          headers: _headers,
+          body: JSON.encode({
+            'title': title,
+            'description': desc,
+            'source': source
+          }));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print((JSON.decode(response.body))["message"]);
+        return null;
+      }
+
+    } catch (e) {
+      print("Tutorial Create API failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<List> getTutorialHeaders() async {
+    try {
+      final response = await _http.get(_tutorialHeadersUrl, headers: _headers);
+      if (response.statusCode != 200) return null;
+      var result = JSON.decode(response.body);
+      return result["headers"];
+    } catch (e) {
+      print("Retrieval of tutorials' titles failed");
       print(e.toString());
       return null;
     }

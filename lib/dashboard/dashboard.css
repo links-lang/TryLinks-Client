@@ -35,6 +35,11 @@
     grid-column: 10 / 12;
 }
 
+.tl-admin-button {
+    grid-row: 1 / 2;
+    grid-column: 8 / 10;
+}
+
 .tl-dashboard-interactive {
     grid-row: 3 / 4;
     grid-column: 2 / 6;
