@@ -112,11 +112,16 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
     var _id = _routeParams.get('id');
     this.id = int.parse(_id ?? '', onError: (_) => null);
-    if (this.id == null) this.id = 1;
     String description = await _service.getTutorialDesc(this.id);
     if (description == null) {
-      description = "The tutorial's description could not be retrieved.";
+      this.id = await _service.getDefaultTutorialId();
+      if (this.id == null) {
+        _router.navigate(['Dashboard']);
+      } else {
+        _router.navigate([ 'Tutorial', {"id": this.id.toString()}]);
+      }
     }
+
     querySelector('div.tl-tutorial-main-desc')
         .setInnerHtml(markdownToHtml(description));
 
@@ -136,11 +141,7 @@ class TutorialPageComponent implements OnInit, OnDestroy {
 
     String source = await _service.getTutorialSource(this.id);
     if (source == null) {
-      if (this.id != 1) {
-        _router.navigate([ 'Tutorial', {"id": 1.toString()}]);
-      } else {
         _router.navigate(['Dashboard']);
-      }
     } else {
       this.editor.getDoc().setValue(source);
       await _service.updateUser(lastTutorial: this.id);

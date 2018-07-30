@@ -24,6 +24,7 @@ class TryLinksService {
   static final String _tutorialUrl = serverAddr + '/api/tutorial/description';
   static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
   static final String _tutorialHeadersUrl = serverAddr + '/api/tutorial/headers';
+  static final String _defaultTutorialIdUrl = serverAddr + '/api/tutorial/defaultId';
 
   TryLinksService(this._http);
 
@@ -219,6 +220,19 @@ class TryLinksService {
       return result["headers"];
     } catch (e) {
       print("Retrieval of tutorials' titles failed");
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<int> getDefaultTutorialId() async {
+    try {
+      final response = await _http.get(_defaultTutorialIdUrl, headers: _headers);
+      if (response.statusCode != 200) return null;
+      var result = JSON.decode(response.body);
+      return result["tutorialId"];
+    } catch (e) {
+      print("Could not retrieve a default tutorial's ID");
       print(e.toString());
       return null;
     }
