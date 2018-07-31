@@ -1,0 +1,73 @@
+<material-content>
+    <div class="title-input">
+        <material-input required
+                        floatingLabel
+                        [error]="errorMsg"
+                        [(ngModel)]="title"
+                        (inputKeyPress)="errorMsg = '';"
+                        label="Title"
+                        type="text">
+        </material-input>
+    </div>
+    <div class="new-tutorial-textarea-header">
+        <div class="textarea-header-desc"><div>Description</div></div>
+        <div class="textarea-header-source"><div>Initial Source Code</div></div>
+    </div>
+    <div class="new-tutorial-content">
+        <textarea class="new-tutorial-desc CodeMirror-scroll"
+                  placeholder="Description of the tutorial goes here. Use the Markdown syntax."></textarea>
+        <textarea class="new-tutorial-editor CodeMirror-scroll"
+                      placeholder="The initial code the user is given goes here"></textarea>
+    </div>
+    <div class="submit-new-tutorial-box">
+        <material-button class="create-btn" raised (trigger)="openModal()">
+            Create a tutorial
+        </material-button>
+    </div>
+
+    <modal [visible]="confirmTutorialCreation && validatedInput"
+           (dismiss)="confirmTutorialCreation = false">
+        <material-dialog>
+            <div header><h3>Create a new tutorial?</h3></div>
+            <p>A new tutorial will be instantly added to the current tutorials and available for other users.</p>
+            <div footer>
+                <material-button class="btn-cancel" (trigger)="confirmTutorialCreation = false">Cancel</material-button>
+                <material-button class="btn-confirm" (trigger)="confirmTutorialCreation = false; onCreateTutorial()">Confirm</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
+    <modal [visible]="confirmTutorialCreation && !validatedInput"
+           (dismiss)="confirmTutorialCreation = false">
+        <material-dialog>
+            <div header><h3>Invalid input</h3></div>
+            <p>All the fields are required to be completed.</p>
+            <div footer>
+                <material-button class="btn-confirm" (trigger)="confirmTutorialCreation = false">OK</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
+    <modal [visible]="success == true"
+           (dismiss)="success = null">
+        <material-dialog>
+            <div header><h3>Success!</h3></div>
+            <p>Tutorial has been successfully created.</p>
+            <div footer>
+                <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
+    <modal [visible]="success == false"
+           (dismiss)="success = null">
+        <material-dialog>
+            <div header><h3>Something went wrong!</h3></div>
+            <p>Unfortunately, tutorial could not be created.</p>
+            <div footer>
+                <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            </div>
+        </material-dialog>
+    </modal>
+
+</material-content>
