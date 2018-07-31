@@ -9,3 +9,8 @@ pubspec.lock
 
 .idea/
 
+
+.dart_tool/
+.dart_tool/pub/bin/build_runner/
+.dart_tool/pub/bin/markdown/
+.dart_tool/pub/bin/test/
