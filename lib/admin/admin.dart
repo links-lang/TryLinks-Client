@@ -6,12 +6,11 @@ import 'package:angular_router/angular_router.dart';
 import 'package:client/admin/add-tutorial/add-tutorial.dart';
 import 'package:client/admin/modify-tutorial/modify-tutorial.dart';
 import 'package:client/service/trylinks_service.dart';
-import 'package:codemirror/codemirror.dart';
 
 @Component(
   selector: 'admin',
   templateUrl: 'admin.html',
-  styleUrls: const ['admin.css'],
+  styleUrls: const ['admin.css', 'package:angular_components/app_layout/layout.scss.css'],
   directives: const [
     materialDirectives,
     ROUTER_DIRECTIVES,

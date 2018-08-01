@@ -22,33 +22,7 @@
     padding: 10% 10% 10% 20%;
 }
 
-.submit-new-tutorial-box {
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-material-button.create-btn[disabled] {
-    background-color: rgba(0, 191, 255, 0.51);
-}
-
-.create-btn {
-    color: white;
-    background-color: deepskyblue;
-}
-
-.btn-cancel {
-    color: #212121;
-}
-
-.btn-confirm {
-    color: deepskyblue;
-}
-
-material-dialog {
-    color: black;
-    font-family:  Helvetica, Arial, sans-serif;
-}
-
 .tl-nav-item {
-    padding: 0;
+    padding-left: 0 !important;
+    height: 35px !important
 }

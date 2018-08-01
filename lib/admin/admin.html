@@ -1,14 +1,14 @@
-<material-drawer class="tl-admin-nav" temporary #drawer="drawer">
-    <material-list>
+<material-drawer class="tl-admin-nav" persistent #drawer="drawer">
+    <material-list *deferredContent>
         <div group>
             <div group class="mat-drawer-spacer"></div>
             <material-list-item class="tl-nav-item">
-                <material-button (trigger)="gotoAddTutorial(); drawer.toggle();">Add Tutorial</material-button>
+                <material-button (trigger)="gotoAddTutorial()">Add Tutorial</material-button>
             </material-list-item>
-            <div group class="mat-drawer-spacer"></div>
+            <div group class="mdc-list-divider"></div>
             <div label>Modify Existing Tutorial</div>
             <material-list-item *ngFor="let header of headers; let i=index" class="tl-nav-item">
-                <material-button (trigger)="gotoModifyTutorial(header['tutorial_id']); drawer.toggle();" class="tl-tutorial-header">{{i+1}}. {{header['title']}}</material-button>
+                <material-button (trigger)="gotoModifyTutorial(header['tutorial_id'])" class="tl-tutorial-header">{{i+1}}. {{header['title']}}</material-button>
             </material-list-item>
         </div>
     </material-list>
