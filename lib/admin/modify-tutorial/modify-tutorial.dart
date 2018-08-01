@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:client/admin/update-list-service.dart';
 import 'package:client/model/links_tutorial.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:codemirror/codemirror.dart';
@@ -17,6 +18,7 @@ import 'package:codemirror/codemirror.dart';
 
 class ModifyTutorialComponent implements OnInit {
   TryLinksService _service;
+  UpdateListService _updateListService;
   final Router _router;
   final RouteParams _routeParams;
   int tutorialId;
@@ -29,7 +31,7 @@ class ModifyTutorialComponent implements OnInit {
   bool successUpdate;
   bool successDelete;
 
-  ModifyTutorialComponent(this._service, this._router, this._routeParams);
+  ModifyTutorialComponent(this._service, this._updateListService, this._router, this._routeParams);
 
   @override
   Future ngOnInit() async {
@@ -76,16 +78,22 @@ class ModifyTutorialComponent implements OnInit {
     this.tutorial.source = this.sourceEditor.getDoc().getValue();
 
     final result = await _service.updateTutorial(this.tutorial);
-
     if (result != true) {
       this.successUpdate = false;
     } else {
       this.successUpdate = true;
+      _updateListService.onUpdateList();
     }
   }
 
   Future onDeleteTutorial() async {
-    this.successDelete = await _service.deleteTutorial(this.tutorialId);
+    final result = await _service.deleteTutorial(this.tutorialId);
+    if (result != true) {
+      this.successDelete = false;
+    } else {
+      this.successDelete = true;
+      _updateListService.onUpdateList();
+    }
   }
 
   void openUpdateModal() {

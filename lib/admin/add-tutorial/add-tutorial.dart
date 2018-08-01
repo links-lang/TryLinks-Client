@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:angular_router/angular_router.dart';
+import 'package:client/admin/update-list-service.dart';
 import 'package:client/service/trylinks_service.dart';
 import 'package:codemirror/codemirror.dart';
 
@@ -24,8 +24,9 @@ class AddTutorialComponent implements OnInit {
   bool success;
 
   TryLinksService _service;
+  UpdateListService _updateListService;
 
-  AddTutorialComponent(this._service);
+  AddTutorialComponent(this._service, this._updateListService);
 
   @override
   Future ngOnInit() async {
@@ -69,6 +70,7 @@ class AddTutorialComponent implements OnInit {
       this.title = null;
       this.descEditor.getDoc().setValue('');
       this.sourceEditor.getDoc().setValue('');
+      _updateListService.onUpdateList();
     }
   }
 
