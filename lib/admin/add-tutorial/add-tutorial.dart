@@ -49,12 +49,12 @@ class AddTutorialComponent implements OnInit {
     this.descEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.tutorial-desc-editor'),
         options: descOptions);
-    this.descEditor.setSize('100%', '77vh');
+    this.descEditor.setSize('100%', '54vh');
 
     this.sourceEditor = new CodeMirror.fromTextArea(
         querySelector('textarea.tutorial-source-editor'),
         options: sourceOptions);
-    this.sourceEditor.setSize('100%', '77vh');
+    this.sourceEditor.setSize('100%', '54vh');
   }
 
   Future onCreateTutorial() async {
