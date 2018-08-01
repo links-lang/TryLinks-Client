@@ -32,15 +32,6 @@ class ModifyTutorialComponent implements OnInit {
 
   @override
   Future ngOnInit() async {
-    var _id = _routeParams.get('id');
-    this.tutorialId = int.parse(_id ?? '', onError: (_) => null);
-
-    this.tutorial = await _service.getTutorial(this.tutorialId);
-
-    if (this.tutorial == null) {
-      _router.navigate(['AddTutorial']);
-    }
-
     Map descOptions = {
       'mode': 'markdown',
       'autofocus': true,
@@ -60,12 +51,22 @@ class ModifyTutorialComponent implements OnInit {
       querySelector('textarea.tutorial-desc-editor'),
       options: descOptions);
     this.descEditor.setSize('100%', '54vh');
-    this.descEditor.getDoc().setValue(this.tutorial.description);
+
 
     this.sourceEditor = new CodeMirror.fromTextArea(
       querySelector('textarea.tutorial-source-editor'),
       options: sourceOptions);
     this.sourceEditor.setSize('100%', '54vh');
+
+    var _id = _routeParams.get('id');
+    this.tutorialId = int.parse(_id ?? '', onError: (_) => null);
+
+    this.tutorial = await _service.getTutorial(this.tutorialId);
+
+    if (this.tutorial == null) {
+      _router.navigate(['AddTutorial']);
+    }
+    this.descEditor.getDoc().setValue(this.tutorial.description);
     this.sourceEditor.getDoc().setValue(this.tutorial.source);
   }
 
