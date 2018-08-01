@@ -3,9 +3,7 @@
 <div class="title-input">
     <material-input required
                     floatingLabel
-                    [error]="errorMsg"
                     [(ngModel)]="tutorial.title"
-                    (inputKeyPress)="errorMsg = '';"
                     label="Title"
                     type="text">
     </material-input>
@@ -21,8 +19,11 @@
               placeholder="The initial code the user is given goes here"></textarea>
 </div>
 <div class="submit-tutorial-box">
-    <material-button class="submit-btn" raised (trigger)="openModal()">
-        Update a tutorial
+    <material-button class="submit-btn" raised (trigger)="openUpdateModal()">
+        Update
+    </material-button>
+    <material-button class="delete-btn" raised (trigger)="openDeleteModal()">
+        Delete
     </material-button>
 </div>
 
@@ -49,24 +50,58 @@
     </material-dialog>
 </modal>
 
-<modal [visible]="success == true"
-       (dismiss)="success = null">
+<modal [visible]="successUpdate == true"
+       (dismiss)="successUpdate = null">
     <material-dialog>
         <div header><h3>Success!</h3></div>
         <p>Tutorial has been successfully updated.</p>
         <div footer>
-            <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            <material-button class="btn-confirm" (trigger)="successUpdate = null">OK</material-button>
         </div>
     </material-dialog>
 </modal>
 
-<modal [visible]="success == false"
-       (dismiss)="success = null">
+<modal [visible]="successUpdate == false"
+       (dismiss)="successUpdate = null">
     <material-dialog>
         <div header><h3>Something went wrong!</h3></div>
         <p>Unfortunately, tutorial could not be updated.</p>
         <div footer>
-            <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+            <material-button class="btn-confirm" (trigger)="successUpdate = null">OK</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="confirmTutorialDeletion"
+       (dismiss)="confirmTutorialDeletion = false">
+    <material-dialog>
+        <div header><h3>Delete the tutorial?</h3></div>
+        <p>Once the tutorial is deleted, it cannot be restored. Are you sure you want to continue?</p>
+        <div footer>
+            <material-button class="btn-cancel" (trigger)="confirmTutorialDeletion = false">Cancel</material-button>
+            <material-button class="btn-confirm-delete" (trigger)="confirmTutorialDeletion = false; onDeleteTutorial()">Confirm</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="successDelete == true"
+       (dismiss)="successDelete = null">
+    <material-dialog>
+        <div header><h3>Success!</h3></div>
+        <p>Tutorial has been successfully deleted.</p>
+        <div footer>
+            <material-button class="btn-confirm" (trigger)="successDelete = null">OK</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="successDelete == false"
+       (dismiss)="successDelete = null">
+    <material-dialog>
+        <div header><h3>Something went wrong!</h3></div>
+        <p>Unfortunately, tutorial could not be deleted.</p>
+        <div footer>
+            <material-button class="btn-confirm" (trigger)="successDelete = null">OK</material-button>
         </div>
     </material-dialog>
 </modal>

@@ -48,13 +48,14 @@
     margin-top: 5px;
 }
 
-material-button.create-btn[disabled] {
-    background-color: rgba(0, 191, 255, 0.51);
-}
-
 .submit-btn {
     color: white;
     background-color: deepskyblue;
+}
+
+.delete-btn {
+    color: white;
+    background-color: #db4437;
 }
 
 .btn-cancel {
@@ -63,6 +64,10 @@ material-button.create-btn[disabled] {
 
 .btn-confirm {
     color: deepskyblue;
+}
+
+.btn-confirm-delete {
+    color: #db4437;
 }
 
 material-dialog {

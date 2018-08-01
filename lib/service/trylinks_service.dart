@@ -26,7 +26,7 @@ class TryLinksService {
   static final String _tutorialDescUrl = serverAddr + '/api/tutorial/description';
   static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
   static final String _updateTutorialUrl = serverAddr + '/api/tutorial/update';
-  static final String _removeTutorialUrl = serverAddr + '/api/tutorial/remove';
+  static final String _deleteTutorialUrl = serverAddr + '/api/tutorial/delete';
   static final String _tutorialHeadersUrl = serverAddr + '/api/tutorial/headers';
   static final String _defaultTutorialIdUrl = serverAddr + '/api/tutorial/defaultId';
 
@@ -271,6 +271,22 @@ class TryLinksService {
       print("Could not retrieve a default tutorial's ID");
       print(e.toString());
       return null;
+    }
+  }
+  
+  Future<bool> deleteTutorial(int tutorialId) async {
+    try {
+      final response = await _http.post(_deleteTutorialUrl,
+        headers: _headers,
+        body: JSON.encode({"tutorialId": tutorialId}));
+      if (response.statusCode != 200) {
+        print((JSON.decode(response.body))["message"]);
+      }
+      return response.statusCode == 200;
+    } catch (e) {
+      print("Could not delete the tutorial with a following reasong:");
+      print(e.toString());
+      return false;
     }
   }
 }

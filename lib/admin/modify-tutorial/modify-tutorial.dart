@@ -23,10 +23,11 @@ class ModifyTutorialComponent implements OnInit {
   LinksTutorial tutorial = new LinksTutorial(null, null, null, null);
   CodeMirror descEditor;
   CodeMirror sourceEditor;
-  String errorMsg;
   bool confirmTutorialUpdate = false;
+  bool confirmTutorialDeletion = false;
   bool validatedInput = false;
-  bool success;
+  bool successUpdate;
+  bool successDelete;
 
   ModifyTutorialComponent(this._service, this._router, this._routeParams);
 
@@ -77,19 +78,26 @@ class ModifyTutorialComponent implements OnInit {
     final result = await _service.updateTutorial(this.tutorial);
 
     if (result != true) {
-      this.success = false;
-      print('Failed to update a tutorial');
+      this.successUpdate = false;
     } else {
-      this.success = true;
+      this.successUpdate = true;
     }
   }
 
-  void openModal() {
+  Future onDeleteTutorial() async {
+    this.successDelete = await _service.deleteTutorial(this.tutorialId);
+  }
+
+  void openUpdateModal() {
     this.confirmTutorialUpdate = true;
     this.validatedInput = this.tutorial.title != null && this.tutorial.title != '' &&
       this.descEditor.getDoc().getValue() != null &&
       this.descEditor.getDoc().getValue() != '' &&
       this.sourceEditor.getDoc().getValue() != null &&
       this.sourceEditor.getDoc().getValue() != '';
+  }
+
+  void openDeleteModal() {
+    this.confirmTutorialDeletion = true;
   }
 }
