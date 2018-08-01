@@ -1,1 +1,72 @@
-<h1>Modify this tutorial</h1>
+<h2 class="modify-header">Modify a tutorial (id: {{tutorial.tutorialId}})</h2>
+
+<div class="title-input">
+    <material-input required
+                    floatingLabel
+                    [error]="errorMsg"
+                    [(ngModel)]="tutorial.title"
+                    (inputKeyPress)="errorMsg = '';"
+                    label="Title"
+                    type="text">
+    </material-input>
+</div>
+<div class="tutorial-textarea-header">
+    <div class="textarea-header-desc"><div>Description</div></div>
+    <div class="textarea-header-source"><div>Initial Source Code</div></div>
+</div>
+<div class="tutorial-editor">
+    <textarea class="tutorial-desc-editor CodeMirror-scroll"
+              placeholder="Description of the tutorial goes here. Use the Markdown syntax."></textarea>
+    <textarea class="tutorial-source-editor CodeMirror-scroll"
+              placeholder="The initial code the user is given goes here"></textarea>
+</div>
+<div class="submit-tutorial-box">
+    <material-button class="submit-btn" raised (trigger)="openModal()">
+        Update a tutorial
+    </material-button>
+</div>
+
+<modal [visible]="confirmTutorialUpdate && validatedInput"
+       (dismiss)="confirmTutorialUpdate = false">
+    <material-dialog>
+        <div header><h3>Update the tutorial?</h3></div>
+        <p>Note that changes made to the tutorial are irreversible.</p>
+        <div footer>
+            <material-button class="btn-cancel" (trigger)="confirmTutorialUpdate = false">Cancel</material-button>
+            <material-button class="btn-confirm" (trigger)="confirmTutorialUpdate = false; onUpdateTutorial()">Confirm</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="confirmTutorialUpdate && !validatedInput"
+       (dismiss)="confirmTutorialUpdate = false">
+    <material-dialog>
+        <div header><h3>Invalid input</h3></div>
+        <p>All the fields are required to be completed.</p>
+        <div footer>
+            <material-button class="btn-confirm" (trigger)="confirmTutorialUpdate = false">OK</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="success == true"
+       (dismiss)="success = null">
+    <material-dialog>
+        <div header><h3>Success!</h3></div>
+        <p>Tutorial has been successfully updated.</p>
+        <div footer>
+            <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+        </div>
+    </material-dialog>
+</modal>
+
+<modal [visible]="success == false"
+       (dismiss)="success = null">
+    <material-dialog>
+        <div header><h3>Something went wrong!</h3></div>
+        <p>Unfortunately, tutorial could not be updated.</p>
+        <div footer>
+            <material-button class="btn-confirm" (trigger)="success = null">OK</material-button>
+        </div>
+    </material-dialog>
+</modal>

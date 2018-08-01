@@ -10,7 +10,6 @@ import 'package:codemirror/codemirror.dart';
   selector: 'add-tutorial',
   templateUrl: 'add-tutorial.html',
   styleUrls: const ['add-tutorial.css'],
-  providers: const [overlayBindings],
   directives: const [
     materialDirectives
 ])
@@ -25,16 +24,11 @@ class AddTutorialComponent implements OnInit {
   bool success;
 
   TryLinksService _service;
-  Router _router;
 
-  AddTutorialComponent(this._router, this._service);
+  AddTutorialComponent(this._service);
 
   @override
   Future ngOnInit() async {
-    if (!_service.isAdmin()) {
-      _router.navigate(['Dashboard']);
-    }
-
     success = null;
 
     Map descOptions = {
@@ -86,12 +80,4 @@ class AddTutorialComponent implements OnInit {
           this.sourceEditor.getDoc().getValue() != null &&
           this.sourceEditor.getDoc().getValue() != '';
   }
-
-  void gotoDashboard() => _router.navigate(['Dashboard']);
-
-  Future logout() async {
-    await _service.logout();
-    _router.navigate(['Welcome']);
-  }
-
 }

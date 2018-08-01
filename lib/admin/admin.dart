@@ -23,7 +23,7 @@ import 'package:client/service/trylinks_service.dart';
     component: AddTutorialComponent,
     useAsDefault: true),
   const Route(
-    path: '/modify-tutorial',
+    path: '/modify-tutorial/:id',
     name: 'ModifyTutorial',
     component: ModifyTutorialComponent
   )
@@ -44,9 +44,9 @@ class AdminPageComponent implements OnInit {
 
   @override
   Future ngOnInit() async {
-//    if (!_service.isAdmin()) {
-//      _router.navigate(['Dashboard']);
-//    }
+    if (!_service.isAdmin()) {
+      _router.navigate(['Dashboard']);
+    }
     success = null;
     this.headers = await _service.getTutorialHeaders();
 
@@ -60,7 +60,7 @@ class AdminPageComponent implements OnInit {
   // Navigation functions
   void gotoAddTutorial() => _router.navigate(['AddTutorial']);
 
-  void gotoModifyTutorial(int id) => _router.navigate(['ModifyTutorial']);
+  void gotoModifyTutorial(int id) => _router.navigate(['ModifyTutorial', {'id': id.toString()}]);
 
   void gotoDashboard() => _router.navigate(['Dashboard']);
 

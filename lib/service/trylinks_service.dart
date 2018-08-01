@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:http/browser_client.dart';
+import '../model/links_tutorial.dart';
 
 @Injectable()
 class TryLinksService {
@@ -21,8 +22,11 @@ class TryLinksService {
   static final String _fileWriteUrl = serverAddr + '/api/file/write';
   static final String _logoutUrl = serverAddr + '/api/logout';
 
-  static final String _tutorialUrl = serverAddr + '/api/tutorial/description';
+  static final String _tutorialUrl = serverAddr + '/api/tutorial';
+  static final String _tutorialDescUrl = serverAddr + '/api/tutorial/description';
   static final String _newTutorialUrl = serverAddr + '/api/tutorial/create';
+  static final String _updateTutorialUrl = serverAddr + '/api/tutorial/update';
+  static final String _removeTutorialUrl = serverAddr + '/api/tutorial/remove';
   static final String _tutorialHeadersUrl = serverAddr + '/api/tutorial/headers';
   static final String _defaultTutorialIdUrl = serverAddr + '/api/tutorial/defaultId';
 
@@ -172,9 +176,28 @@ class TryLinksService {
     }
   }
 
-  Future<String> getTutorialDesc(int id) async {
+  Future<LinksTutorial> getTutorial(int id) async {
     try {
       final response = await _http.post(_tutorialUrl,
+        headers: _headers, body: JSON.encode({'tutorialId': id}));
+      if (response.statusCode == 200) {
+        var tutorial = (JSON.decode(response.body))["tutorial"];
+        return new LinksTutorial(
+          tutorial["tutorial_id"], tutorial["title"],
+          tutorial["description"], tutorial["source"]);
+      } else {
+        print((JSON.decode(response.body))["message"]);
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<String> getTutorialDesc(int id) async {
+    try {
+      final response = await _http.post(_tutorialDescUrl,
           headers: _headers, body: JSON.encode({'tutorialId': id}));
       if (response.statusCode == 200) {
         var result = JSON.decode(response.body);
@@ -209,6 +232,19 @@ class TryLinksService {
       print("Tutorial Create API failed");
       print(e.toString());
       return null;
+    }
+  }
+
+  Future<bool> updateTutorial(LinksTutorial tutorial) async {
+    try {
+      final response = await _http.post(_updateTutorialUrl,
+        headers: _headers,
+        body: JSON.encode(tutorial.toJSON()));
+      return response.statusCode == 200;
+    } catch (e) {
+      print("Update Tutorial API failed with the following detail:\n");
+      print(e.toString());
+      return false;
     }
   }
 
