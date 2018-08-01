@@ -9,7 +9,7 @@ import 'package:codemirror/codemirror.dart';
 @Component(
   selector: 'add-tutorial',
   templateUrl: 'add-tutorial.html',
-  styleUrls: const ['add-tutorial.css'],
+  styleUrls: const ['../tutorial-editor.css'],
   directives: const [
     materialDirectives
 ])
@@ -47,12 +47,12 @@ class AddTutorialComponent implements OnInit {
     };
 
     this.descEditor = new CodeMirror.fromTextArea(
-        querySelector('textarea.new-tutorial-desc'),
+        querySelector('textarea.tutorial-desc-editor'),
         options: descOptions);
     this.descEditor.setSize('100%', '77vh');
 
     this.sourceEditor = new CodeMirror.fromTextArea(
-        querySelector('textarea.new-tutorial-editor'),
+        querySelector('textarea.tutorial-source-editor'),
         options: sourceOptions);
     this.sourceEditor.setSize('100%', '77vh');
   }

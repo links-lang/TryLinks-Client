@@ -18,7 +18,7 @@
     padding: 10% 10% 10% 20%;
 }
 
-.new-tutorial-content {
+.tutorial-editor {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     background-color: white;
@@ -27,7 +27,7 @@
     height: 77vh;
 }
 
-.title-input, .submit-new-tutorial-box {
+.title-input, .submit-tutorial-box {
     margin: auto;
     margin-bottom: 5px;
     text-align: center;
@@ -43,7 +43,7 @@
     width: 90%;
 }
 
-.submit-new-tutorial-box {
+.submit-tutorial-box {
     padding: 5px 0;
     margin-top: 5px;
 }
@@ -52,7 +52,7 @@ material-button.create-btn[disabled] {
     background-color: rgba(0, 191, 255, 0.51);
 }
 
-.create-btn {
+.submit-btn {
     color: white;
     background-color: deepskyblue;
 }
@@ -76,14 +76,14 @@ material-dialog {
     overflow-x: auto;
 }
 
-.new-tutorial-textarea-header {
+.tutorial-textarea-header {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     color: black;
     margin: 0 10%;
 }
 
-.new-tutorial-textarea-header div {
+.tutorial-textarea-header div {
     text-align: center;
     padding: 5px 0;
 }
@@ -109,4 +109,8 @@ material-dialog {
 
 .textarea-header-source div {
     border-bottom: 1px solid rgba(233, 237, 237, 0.54);
+}
+
+.tutorial-panel-header {
+    text-align: center;
 }

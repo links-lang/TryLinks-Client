@@ -10,7 +10,7 @@ import 'package:codemirror/codemirror.dart';
 @Component(
   selector: 'modify-tutorial',
   templateUrl: 'modify-tutorial.html',
-  styleUrls: const ['modify-tutorial.css'],
+  styleUrls: const ['../tutorial-editor.css'],
   directives: const [
     materialDirectives
 ])
