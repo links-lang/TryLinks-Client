@@ -14,6 +14,6 @@ void main() {
         useFactory: () => new BrowserClient()..withCredentials = true,
         deps: []),
     TryLinksService,
-    UpdateListService
+    UpdateHeadersService
   ]);
 }

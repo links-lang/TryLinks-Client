@@ -23,10 +23,10 @@ class AddTutorialComponent implements OnInit {
   bool validatedInput = false;
   bool success;
 
-  TryLinksService _service;
-  UpdateListService _updateListService;
+  TryLinksService _tryLinksService;
+  UpdateHeadersService _updateHeadersService;
 
-  AddTutorialComponent(this._service, this._updateListService);
+  AddTutorialComponent(this._tryLinksService, this._updateHeadersService);
 
   @override
   Future ngOnInit() async {
@@ -59,7 +59,7 @@ class AddTutorialComponent implements OnInit {
   }
 
   Future onCreateTutorial() async {
-    final result = await _service.createTutorial(
+    final result = await _tryLinksService.createTutorial(
         title, this.descEditor.getDoc().getValue(), this.sourceEditor.getDoc().getValue());
 
     if (result != true) {
@@ -70,7 +70,7 @@ class AddTutorialComponent implements OnInit {
       this.title = null;
       this.descEditor.getDoc().setValue('');
       this.sourceEditor.getDoc().setValue('');
-      _updateListService.onUpdateList();
+      _updateHeadersService.onUpdateHeaders();
     }
   }
 

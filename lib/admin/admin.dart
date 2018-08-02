@@ -32,28 +32,24 @@ import 'package:client/service/trylinks_service.dart';
 class AdminPageComponent implements OnInit {
   List headers;
 
-  TryLinksService _service;
+  TryLinksService _tryLinksService;
   Router _router;
-  UpdateListService _updateListService;
+  UpdateHeadersService _updateHeadersService;
 
-  AdminPageComponent(this._router, this._service, this._updateListService);
+  AdminPageComponent(this._router, this._tryLinksService, this._updateHeadersService);
 
   @override
   Future ngOnInit() async {
-    if (!_service.isAdmin()) {
+    if (!_tryLinksService.isAdmin()) {
       _router.navigate(['Dashboard']);
     }
-    this.headers = await _service.getTutorialHeaders();
+    this.headers = await _tryLinksService.getTutorialHeaders();
 
-    _updateListService.updateList.listen((data) =>
-      _service.getTutorialHeaders()
+    _updateHeadersService.updateHeadersStream.listen((data) =>
+      _tryLinksService.getTutorialHeaders()
         .then((headers) => this.headers = headers)
         .catchError(() => print("Could not retrieve the list of tutorials"))
     );
-  }
-
-  void updateList() {
-    print("Update List");
   }
 
   // Navigation functions
@@ -64,7 +60,7 @@ class AdminPageComponent implements OnInit {
   void gotoDashboard() => _router.navigate(['Dashboard']);
 
   Future logout() async {
-    await _service.logout();
+    await _tryLinksService.logout();
     _router.navigate(['Welcome']);
   }
 

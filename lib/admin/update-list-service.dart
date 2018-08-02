@@ -2,14 +2,14 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 
 @Injectable()
-class UpdateListService {
+class UpdateHeadersService {
   StreamController<bool> _updateListController = new StreamController();
 
-  UpdateListService();
+  UpdateHeadersService();
 
-  Stream get updateList => _updateListController.stream;
+  Stream get updateHeadersStream => _updateListController.stream;
 
-  void onUpdateList() {
+  void onUpdateHeaders() {
     this._updateListController.add(true);
   }
 }

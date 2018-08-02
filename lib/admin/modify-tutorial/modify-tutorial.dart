@@ -17,8 +17,8 @@ import 'package:codemirror/codemirror.dart';
 ])
 
 class ModifyTutorialComponent implements OnInit {
-  TryLinksService _service;
-  UpdateListService _updateListService;
+  TryLinksService _tryLinksService;
+  UpdateHeadersService _updateHeadersService;
   final Router _router;
   final RouteParams _routeParams;
   int tutorialId;
@@ -31,7 +31,7 @@ class ModifyTutorialComponent implements OnInit {
   bool successUpdate;
   bool successDelete;
 
-  ModifyTutorialComponent(this._service, this._updateListService, this._router, this._routeParams);
+  ModifyTutorialComponent(this._tryLinksService, this._updateHeadersService, this._router, this._routeParams);
 
   @override
   Future ngOnInit() async {
@@ -64,7 +64,7 @@ class ModifyTutorialComponent implements OnInit {
     var _id = _routeParams.get('id');
     this.tutorialId = int.parse(_id ?? '', onError: (_) => null);
 
-    this.tutorial = await _service.getTutorial(this.tutorialId);
+    this.tutorial = await _tryLinksService.getTutorial(this.tutorialId);
 
     if (this.tutorial == null) {
       _router.navigate(['AddTutorial']);
@@ -77,22 +77,22 @@ class ModifyTutorialComponent implements OnInit {
     this.tutorial.description = this.descEditor.getDoc().getValue();
     this.tutorial.source = this.sourceEditor.getDoc().getValue();
 
-    final result = await _service.updateTutorial(this.tutorial);
+    final result = await _tryLinksService.updateTutorial(this.tutorial);
     if (result != true) {
       this.successUpdate = false;
     } else {
       this.successUpdate = true;
-      _updateListService.onUpdateList();
+      _updateHeadersService.onUpdateHeaders();
     }
   }
 
   Future onDeleteTutorial() async {
-    final result = await _service.deleteTutorial(this.tutorialId);
+    final result = await _tryLinksService.deleteTutorial(this.tutorialId);
     if (result != true) {
       this.successDelete = false;
     } else {
       this.successDelete = true;
-      _updateListService.onUpdateList();
+      _updateHeadersService.onUpdateHeaders();
     }
   }
 
