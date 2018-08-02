@@ -178,8 +178,8 @@ class TryLinksService {
 
   Future<LinksTutorial> getTutorial(int id) async {
     try {
-      final response = await _http.post(_tutorialUrl,
-        headers: _headers, body: JSON.encode({'tutorialId': id}));
+      final response = await _http.get("${_tutorialUrl}/${id}",
+        headers: _headers);
       if (response.statusCode == 200) {
         var tutorial = (JSON.decode(response.body))["tutorial"];
         return new LinksTutorial(

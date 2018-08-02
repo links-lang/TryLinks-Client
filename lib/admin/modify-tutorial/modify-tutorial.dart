@@ -68,9 +68,10 @@ class ModifyTutorialComponent implements OnInit {
 
     if (this.tutorial == null) {
       _router.navigate(['AddTutorial']);
+    } else {
+      this.descEditor.getDoc().setValue(this.tutorial.description);
+      this.sourceEditor.getDoc().setValue(this.tutorial.source);
     }
-    this.descEditor.getDoc().setValue(this.tutorial.description);
-    this.sourceEditor.getDoc().setValue(this.tutorial.source);
   }
 
   Future onUpdateTutorial() async {
