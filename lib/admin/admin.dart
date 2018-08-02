@@ -29,12 +29,13 @@ import 'package:client/service/trylinks_service.dart';
   )
 ])
 
-class AdminPageComponent implements OnInit {
+class AdminPageComponent implements OnInit, OnDestroy {
   List headers;
 
   TryLinksService _tryLinksService;
   Router _router;
   UpdateHeadersService _updateHeadersService;
+  StreamSubscription updateHeaderSubscription;
 
   AdminPageComponent(this._router, this._tryLinksService, this._updateHeadersService);
 
@@ -45,11 +46,17 @@ class AdminPageComponent implements OnInit {
     }
     this.headers = await _tryLinksService.getTutorialHeaders();
 
-    _updateHeadersService.updateHeadersStream.listen((data) =>
+    this.updateHeaderSubscription =
+      _updateHeadersService.updateHeadersStream.listen((data) =>
       _tryLinksService.getTutorialHeaders()
         .then((headers) => this.headers = headers)
         .catchError(() => print("Could not retrieve the list of tutorials"))
     );
+  }
+
+  @override
+  Future ngOnDestroy() async {
+    this.updateHeaderSubscription.cancel();
   }
 
   // Navigation functions
