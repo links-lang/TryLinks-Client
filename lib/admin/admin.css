@@ -1,6 +1,10 @@
+.tl-admin-nav, .drawer-content {
+    width: auto;
+}
+
 .tl-admin-header {
     display: grid;
-    grid-template-columns: 60px 4fr 1fr 1fr;
+    grid-template-columns: 40px 60px 4fr 1fr 1fr;
 }
 
 .tl-header-name {
@@ -18,95 +22,7 @@
     padding: 10% 10% 10% 20%;
 }
 
-.new-tutorial-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: white;
-    color: black;
-    margin: 0 10%;
-    height: 77vh;
-}
-
-.title-input, .submit-new-tutorial-box {
-    margin: auto;
-    margin-bottom: 5px;
-    text-align: center;
-    width: 80%;
-}
-
-.title-input {
-    color: black;
-    background-color: white;
-}
-
-.title-input material-input {
-    width: 90%;
-}
-
-.submit-new-tutorial-box {
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-material-button.create-btn[disabled] {
-    background-color: rgba(0, 191, 255, 0.51);
-}
-
-.create-btn {
-    color: white;
-    background-color: deepskyblue;
-}
-
-.btn-cancel {
-    color: #212121;
-}
-
-.btn-confirm {
-    color: deepskyblue;
-}
-
-material-dialog {
-    color: black;
-    font-family:  Helvetica, Arial, sans-serif;
-}
-
-.CodeMirror {
-    height: auto;
-    overflow-y: hidden;
-    overflow-x: auto;
-}
-
-.new-tutorial-textarea-header {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    color: black;
-    margin: 0 10%;
-}
-
-.new-tutorial-textarea-header div {
-    text-align: center;
-    padding: 5px 0;
-}
-
-.textarea-header-desc {
-    background-color: white;
-    color: rgba(0, 0, 0, 0.54);
-}
-
-.textarea-header-source {
-    background-color: #263238;
-    color: rgba(233, 237, 237, 0.54);
-}
-
-.textarea-header-desc div, .textarea-header-source div {
-    width: 80%;
-    margin: auto
-}
-
-.textarea-header-desc div {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.54);
-}
-
-.textarea-header-source div {
-    border-bottom: 1px solid rgba(233, 237, 237, 0.54);
+.tl-nav-item {
+    padding-left: 0 !important;
+    height: 35px !important
 }

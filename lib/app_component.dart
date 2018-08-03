@@ -39,6 +39,6 @@ import 'package:client/admin/admin.dart';
       path: '/tutorial/:id',
       name: 'Tutorial',
       component: TutorialPageComponent),
-  const Route(path: '/admin', name: 'Admin', component: AdminPageComponent),
+  const Route(path: '/admin/...', name: 'Admin', component: AdminPageComponent),
 ])
 class AppComponent {}
