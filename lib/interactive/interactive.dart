@@ -64,7 +64,14 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
       });
 
       socket.on('shell error', (error) {
-        allLines.add(new ShellLine(LineType.stderr, error));
+        // TODO
+        // When the raw error message is sent, it often is not printed as
+        // It starts with <stdin> which DART's default sanitizer does not allow
+        // The custom sanitizer should be implemented,
+        // Yet for now <stdin> is simply removed
+        print(error);
+        String sanitizedError = error.replaceFirst(new RegExp(r"<stdin>(:\d+(: )?)?"), '');
+        allLines.add(new ShellLine(LineType.stderr, sanitizedError));
         scrollToBottom();
       });
     });
