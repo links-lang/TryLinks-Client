@@ -59,18 +59,12 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
       socket.on('shell output', (output) {
         if (showLoadingDialog) _showNewIntro();
         showLoadingDialog = false;
-        allLines.add(new ShellLine(LineType.stdout, output));
+        allLines.add(new ShellLine(LineType.stdout, simpleSanitize(output)));
         scrollToBottom();
       });
 
       socket.on('shell error', (error) {
-        // TODO
-        // When the raw error message is sent, it often is not printed as
-        // It starts with <stdin> which DART's default sanitizer does not allow
-        // The custom sanitizer should be implemented,
-        // Yet for now <stdin> is simply removed
-        String sanitizedError = error.replaceFirst(new RegExp(r"<stdin>(:\d+(: )?)?"), '');
-        allLines.add(new ShellLine(LineType.stderr, sanitizedError));
+        allLines.add(new ShellLine(LineType.stderr, simpleSanitize(error)));
         scrollToBottom();
       });
     });
@@ -78,7 +72,6 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
 
   void onInputChange() {
     scrollToBottom();
-    print(shellInput.focused);
     if (!shellInput.focused) return;
 
     currentCmd += "\n" + shellInput.inputText;
@@ -133,5 +126,14 @@ class InteractiveShellPageComponent implements OnInit, OnDestroy {
           .add(new ShellLine(LineType.intro, starterTutorialDesc[introIndex]));
       introIndex++;
     }
+  }
+
+  // TODO
+  // When the raw (error) message is sent, it often is not printed as
+  // It starts with <stdin> which DART's default sanitizer does not allow
+  // The custom sanitizer should be implemented,
+  // Yet for now <stdin> is simply removed
+  String simpleSanitize(String msg) {
+    return msg.replaceFirst(new RegExp(r"<stdin>(:\d+(: )?)?"), '');
   }
 }
