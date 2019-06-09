@@ -14,3 +14,52 @@ pubspec.lock
 .dart_tool/pub/bin/build_runner/
 .dart_tool/pub/bin/markdown/
 .dart_tool/pub/bin/test/
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+trylinks-v2/dist
+trylinks-v2/tmp
+trylinks-v2/out-tsc
+# Only exists if Bazel was run
+trylinks-v2/bazel-out
+
+# dependencies
+trylinks-v2/node_modules
+
+# profiling files
+trylinks-v2/chrome-profiler-events.json
+trylinks-v2/speed-measure-plugin.json
+
+# IDEs and editors
+trylinks-v2/.idea
+trylinks-v2/.project
+trylinks-v2/.classpath
+trylinks-v2/.c9/
+trylinks-v2/*.launch
+trylinks-v2/.settings/
+trylinks-v2/*.sublime-workspace
+
+# IDE - VSCode
+trylinks-v2/.vscode/*
+trylinks-v2/!.vscode/settings.json
+trylinks-v2/!.vscode/tasks.json
+trylinks-v2/!.vscode/launch.json
+trylinks-v2/!.vscode/extensions.json
+trylinks-v2/.history/*
+
+# misc
+trylinks-v2/.sass-cache
+trylinks-v2/connect.lock
+trylinks-v2/coverage
+trylinks-v2/libpeerconnection.log
+trylinks-v2/npm-debug.log
+trylinks-v2/yarn-error.log
+trylinks-v2/testem.log
+trylinks-v2/typings
+
+# System Files
+trylinks-v2/.DS_Store
+trylinks-v2/Thumbs.db
+
+trylinks-v2/src/environments/environment.prod.ts
