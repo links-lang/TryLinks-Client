@@ -1,0 +1,3 @@
+[submodule "TryLinks-Client-v2"]
+	path = TryLinks-Client-v2
+	url = https://github.com/NickWu007/TryLinks-Client-v2.git
