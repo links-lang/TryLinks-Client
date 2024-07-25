@@ -1,3 +1,7 @@
+# ARCHIVED REPOSITORY
+
+This repository is superseded by more recent developments and has been archived.
+
 # TryLinks Client
 
 TryLinks client repository.
